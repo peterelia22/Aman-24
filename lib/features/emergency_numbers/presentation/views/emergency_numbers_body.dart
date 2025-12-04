@@ -1,7 +1,6 @@
-import 'package:depi_project/app_theme.dart';
+import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:depi_project/core/helpers/build_app_bar.dart';
 import 'package:depi_project/features/emergency_numbers/presentation/views/widgets/widget_emergency_numbers.dart';
-import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class EmergencyNumbersBody extends StatelessWidget {
@@ -11,8 +10,9 @@ class EmergencyNumbersBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.white,
-      appBar: buildAppBar(title: S.of(context).emergencyNumbers),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: buildAppBar( context, title: 'ارقام الطوارئ',
+      ),
       body: Padding(
         padding: const EdgeInsets.only(right: 16, left: 16),
         child: ListView(
@@ -20,6 +20,7 @@ class EmergencyNumbersBody extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16),
               child: Container(
+                
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -27,10 +28,10 @@ class EmergencyNumbersBody extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        S.of(context).usingEmergencyNumbers,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.titleSmall!.copyWith(color: AppTheme.black),
+                        "يرجى استخدام هذه الأرقام فقط في حالات الطوارئ الفعلية.",
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                 fontWeight: FontWeight.w600,
+),
                       ),
                     ),
                     SizedBox(width: 8),
@@ -43,43 +44,43 @@ class EmergencyNumbersBody extends StatelessWidget {
             SizedBox(height: 24),
             WidgetEmergencyNumbers(
               icon: Icons.local_hospital,
-              text1: S.of(context).ambulance,
+              text1: "اسعاف",
               number: "123",
             ),
             SizedBox(height: 16),
             WidgetEmergencyNumbers(
               icon: Icons.local_police,
-              text1: S.of(context).police,
+              text1: "شرطة",
               number: "122",
             ),
             SizedBox(height: 16),
             WidgetEmergencyNumbers(
               icon: Icons.fire_extinguisher,
-              text1: S.of(context).fireFighters,
+              text1: "اطفاء حريق",
               number: "180",
             ),
             SizedBox(height: 16),
             WidgetEmergencyNumbers(
               icon: Icons.support_agent,
-              text1: S.of(context).HelpLine,
+              text1: "خط نجدة",
               number: "15044",
             ),
             SizedBox(height: 16),
             WidgetEmergencyNumbers(
               icon: Icons.electrical_services,
-              text1: S.of(context).electricalEmergency,
+              text1: "الطوارئ الكهربائية",
               number: "121",
             ),
             SizedBox(height: 16),
             WidgetEmergencyNumbers(
               icon: Icons.local_fire_department,
-              text1: S.of(context).fireEmergency,
+              text1: "الطوارئ الحريق",
               number: "180",
             ),
             SizedBox(height: 16),
             WidgetEmergencyNumbers(
               icon: Icons.water_drop,
-              text1: S.of(context).water,
+              text1: " المياه",
               number: "125",
             ),
           ],

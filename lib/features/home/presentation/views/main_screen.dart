@@ -1,4 +1,3 @@
-import 'package:depi_project/app_theme.dart';
 import 'package:depi_project/core/helpers/get_user.dart';
 import 'package:depi_project/core/services/get_it_service.dart';
 import 'package:depi_project/features/add_report/presentation/views/add_report_view.dart';
@@ -9,10 +8,8 @@ import 'package:depi_project/features/notifications/domain/repos/notifications_r
 import 'package:depi_project/core/cubits/get_notifications_cubit/get_notifications_cubit.dart';
 import 'package:depi_project/features/notifications/presentation/views/notifications_view.dart';
 import 'package:depi_project/features/reports/presentation/views/repports_body.dart';
-import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -70,15 +67,13 @@ class _MainScreenState extends State<MainScreen> {
 
         // 🔸 الزر العائم في المنتصف (أحمر متوهج)
         floatingActionButton: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: AppTheme.primaryColor.withValues(
-                  alpha: 0.2,
-                ), // توهج أحمر
+                color: Color(0xFFFF6B5E), // توهج أحمر
                 blurRadius: 10,
-                spreadRadius: 5,
+                spreadRadius: 1,
               ),
             ],
           ),
@@ -95,14 +90,14 @@ class _MainScreenState extends State<MainScreen> {
                 builder: (context) => const AddReportView(),
               );
             },
-            child: Icon(Icons.add, size: 32.sp, color: Colors.white),
+            child: const Icon(Icons.add, size: 32, color: Colors.white),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
         // 🔸 الشريط السفلي
         bottomNavigationBar: ClipRRect(
-          borderRadius: BorderRadius.circular(30.r),
+          borderRadius: BorderRadius.circular(30),
           child: BlocBuilder<GetNotificationsCubit, GetNotificationsState>(
             bloc: notificationsCubit,
             builder: (context, state) {
@@ -111,31 +106,29 @@ class _MainScreenState extends State<MainScreen> {
                   : 0;
 
               return BottomNavigationBar(
-                elevation: 0,
                 type: BottomNavigationBarType.fixed,
+                elevation: 0,
                 currentIndex: currentIndex,
                 selectedItemColor: const Color(0xFFFF6B5E),
-                unselectedItemColor: const Color.fromARGB(153, 86, 83, 83),
-                iconSize: 24.sp,
-                selectedFontSize: 10.sp,
-                unselectedFontSize: 10.sp,
+                unselectedItemColor: Theme.of(context).unselectedWidgetColor,
+                iconSize: 24,
                 onTap: (index) => setState(() => currentIndex = index),
                 items: [
-                  BottomNavigationBarItem(
+                  const BottomNavigationBarItem(
                     icon: Icon(Icons.home),
-                    label: S.of(context).home,
+                    label: "الرئيسية",
                   ),
-                  BottomNavigationBarItem(
+                  const BottomNavigationBarItem(
                     icon: Icon(Icons.receipt_long),
-                    label: S.of(context).myReports,
+                    label: "بلاغاتي",
                   ),
                   BottomNavigationBarItem(
                     icon: NotificationBadgeIcon(count: unreadCount),
-                    label: S.of(context).notifications,
+                    label: "الاشعارات",
                   ),
-                  BottomNavigationBarItem(
+                  const BottomNavigationBarItem(
                     icon: Icon(Icons.person),
-                    label: S.of(context).profile,
+                    label: "الملف الشخصي",
                   ),
                 ],
               );

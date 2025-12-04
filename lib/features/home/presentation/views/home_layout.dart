@@ -1,16 +1,14 @@
 import 'dart:developer';
 
-import 'package:depi_project/app_theme.dart';
+import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:depi_project/core/helpers/get_user.dart';
 import 'package:depi_project/features/add_report/presentation/views/add_report_view.dart';
 import 'package:depi_project/features/from_home_to_page/security_tips_page/presentation/security_tips_page.dart';
+import 'package:depi_project/features/home/presentation/views/widgets/home_widget/widgets_theme_toggle_button.dart';
 import 'package:depi_project/features/profile/presentation/views/profile_view.dart';
 import 'package:depi_project/features/home/presentation/views/widgets/home_widget/widget_awareness_card.dart';
 import 'package:depi_project/features/home/presentation/views/widgets/home_widget/widget_quick_options.dart';
-import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../reports/presentation/views/repports_body.dart';
 
@@ -20,10 +18,10 @@ class HomeLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.only(right: 16.w, left: 16.w),
+          padding: const EdgeInsets.only(right: 16, left: 16),
           child: ListView(
             children: [
               Row(
@@ -33,14 +31,14 @@ class HomeLayout extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         backgroundColor: AppTheme.grey,
-                        radius: 30.r,
+                        radius: 30,
                         child: Icon(
                           Icons.person,
-                          size: 30.sp,
+                          size: 30,
                           color: AppTheme.lightGrey,
                         ),
                       ),
-                      SizedBox(width: 16.w),
+                      SizedBox(width: 16),
                       GestureDetector(
                         onTap: () {
                           log("Navigating to Profile Page");
@@ -55,19 +53,18 @@ class HomeLayout extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              S.of(context).greeting,
+                              "مرحبا بك",
                               style: TextStyle(
-                                color: AppTheme.darkGrey,
-                                fontSize: 14.sp,
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
                               "${getUser().firstName} ${getUser().lastName}",
-                              maxLines: 1,
                               style: TextStyle(
-                                color: AppTheme.black,
-                                fontSize: 16.sp,
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -76,16 +73,17 @@ class HomeLayout extends StatelessWidget {
                       ),
                     ],
                   ),
+         ThemeToggleButton(),
                 ],
               ),
-              SizedBox(height: 32.h),
+              SizedBox(height: 32),
               SizedBox(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * 0.25,
                 child: Stack(
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(10.r),
+                      borderRadius: BorderRadius.circular(10),
                       child: Image.asset(
                         "assets/images/police.jpg",
                         width: double.infinity,
@@ -93,18 +91,17 @@ class HomeLayout extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(16.w),
+                      padding: const EdgeInsets.only(right: 32, top: 32),
                       child: Column(
-                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 12.h,
+                        spacing: 16,
                         children: [
                           Container(
-                            width: 45.w,
-                            height: 45.h,
+                            width: MediaQuery.of(context).size.width * 0.12,
+                            height: MediaQuery.of(context).size.height * 0.06,
                             decoration: BoxDecoration(
                               color: AppTheme.darkGrey,
-                              borderRadius: BorderRadius.circular(20.r),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                             child: GestureDetector(
                               onTap: () {
@@ -115,47 +112,37 @@ class HomeLayout extends StatelessWidget {
                               child: Icon(
                                 Icons.add_box,
                                 color: AppTheme.white,
-                                size: 20.sp,
+                                size: 20,
                               ),
                             ),
                           ),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 8.w,
-                              vertical: 6.h,
+                          Text(
+                            " تقديم بلاغ جديد",
+                            style: TextStyle(
+                              color: AppTheme.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
                             ),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.85),
-                              borderRadius: BorderRadius.circular(8.r),
-                            ),
-                            child: Column(
-                              spacing: 6.h,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  S.of(context).reportButtonTitle,
-                                  style: TextStyle(
-                                    color: AppTheme.black,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          ),
+                          Column(
+                            spacing: 8,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "يمكنك تقديم بلاغ جديد  ",
+                                style: TextStyle(
+                                  color: AppTheme.black,
+                                  fontSize: 12,
                                 ),
-                                Text(
-                                  S.of(context).reportButtonDiscription,
-                                  style: TextStyle(
-                                    color: AppTheme.black,
-                                    fontSize: 12.sp,
-                                  ),
+                              ),
+                              Text(
+                                "بسهولة وبسرعة",
+                                style: TextStyle(
+                                  color: AppTheme.black,
+                                  fontSize: 12,
                                 ),
-                                Text(
-                                  S.of(context).reportButtonDiscriptionContinue,
-                                  style: TextStyle(
-                                    color: AppTheme.black,
-                                    fontSize: 12.sp,
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -163,16 +150,16 @@ class HomeLayout extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 32.h),
+              SizedBox(height: 32),
               Text(
-                S.of(context).quickOptions,
+                "خيارات سريعة",
                 style: TextStyle(
-                  color: AppTheme.black,
-                  fontSize: 16.sp,
+                color: Theme.of(context).colorScheme.onSurface,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16.h),
+              SizedBox(height: 16),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -185,10 +172,10 @@ class HomeLayout extends StatelessWidget {
                     },
                     child: WidgetQuickOptions(
                       icon: Icons.receipt_long,
-                      text: S.of(context).myReports,
+                      text: "بلاغاتي",
                     ),
                   ),
-                  SizedBox(height: 16.h),
+                  const SizedBox(height: 16),
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(
@@ -199,31 +186,28 @@ class HomeLayout extends StatelessWidget {
                     },
                     child: WidgetQuickOptions(
                       icon: Icons.security,
-                      text: S.of(context).securityTips,
+                      text: "نصائح امنيه",
                     ),
                   ),
-                  SizedBox(height: 16.h),
-                  WidgetQuickOptions(
-                    icon: Icons.phone,
-                    text: S.of(context).emergencyNumbers,
-                  ),
+                  const SizedBox(height: 16),
+                  WidgetQuickOptions(icon: Icons.phone, text: " ارقام طوارئ"),
                 ],
               ),
-              SizedBox(height: 32.h),
+              SizedBox(height: 32),
               WidgetAwarenessCard(
-                text1: S.of(context).ministryAwareness,
-                text2: S.of(context).cyberFraudWarning,
-                text3: S.of(context).cyberFraudWarningContinue,
+                text1: "توعية الوزارة",
+                text2: " تحذير من الاحتيال السيبراني",
+                text3: " احم نفسك من الجرائم السيبرانية  ",
                 imageUrl: "assets/images/security.jpg",
-                text4: S.of(context).cyberFraudWarningContinue2,
+                text4: "والاحتيال والتهديد",
               ),
-              SizedBox(height: 16.h),
+              SizedBox(height: 16),
               WidgetAwarenessCard(
-                text1: S.of(context).ministryAwareness,
-                text2: S.of(context).reportingCybercrimes,
-                text3: S.of(context).cyberFraudWarningContinue3,
+                text1: "توعية الوزارة",
+                text2: " التبليغ عن الجرائم الالكترونية",
+                text3: "ابلغ عن الجرائم الالكترونية والحتيال",
                 imageUrl: "assets/images/computer2.jpg",
-                text4: S.of(context).cyberFraudWarningContinue4,
+                text4: "السيبراني لحماية نفسك",
               ),
             ],
           ),

@@ -1,6 +1,5 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:depi_project/app_theme.dart';
-import 'package:depi_project/generated/l10n.dart';
+import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
@@ -32,8 +31,9 @@ class _AddReportViewBodyState extends State<AddReportViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+    return Container(
+      constraints: BoxConstraints.expand(),
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -51,19 +51,19 @@ class _AddReportViewBodyState extends State<AddReportViewBody> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return S.of(context).enterReportTitle;
+                      return 'برجاء إدخال عنوان البلاغ';
                     } else if (value.length < 5) {
-                      return S.of(context).reportTitleAtLeast5;
+                      return 'عنوان البلاغ يجب أن يكون 5 أحرف على الأقل';
                     }
                     return null;
                   },
-                  labelText: S.of(context).reportTitle,
-                  hintText: S.of(context).reportEx,
+                  labelText: 'عنوان البلاغ',
+                  hintText: 'مثال: سرقة محل تجاري',
                   obscureText: false,
                   keyboardType: TextInputType.text,
                 ),
                 const SizedBox(height: 16),
-
+      
                 // Description field
                 CustomTextField(
                   onSaved: (value) {
@@ -71,40 +71,40 @@ class _AddReportViewBodyState extends State<AddReportViewBody> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return S.of(context).enterReportDescription;
+                      return 'برجاء إدخال وصف البلاغ';
                     } else if (value.length < 10) {
-                      return S.of(context).reportDescriptionAtLeast10;
+                      return 'وصف البلاغ يجب أن يكون 10 أحرف على الأقل';
                     }
                     return null;
                   },
-                  labelText: S.of(context).reportDescription,
-                  hintText: S.of(context).writeReportDescription,
+                  labelText: 'وصف البلاغ',
+                  hintText: 'اكتب تفاصيل البلاغ بالكامل...',
                   obscureText: false,
                   keyboardType: TextInputType.multiline,
                   maxLines: 5,
                 ),
                 const SizedBox(height: 16),
-
+      
                 // Location field (optional)
                 CustomTextField(
                   onSaved: (value) {
                     address = value?.isEmpty == true ? null : value;
                   },
                   validator: (value) => null,
-                  labelText: S.of(context).location,
-                  hintText: S.of(context).locationEx,
+                  labelText: 'الموقع (اختياري)',
+                  hintText: 'مثال: شارع الجمهورية، القاهرة',
                   obscureText: false,
                   keyboardType: TextInputType.text,
                 ),
                 const SizedBox(height: 24),
-
+      
                 // Media Section
                 MediaPickerSection(
                   mediaManager: mediaManager,
                   onMediaChanged: () => setState(() {}),
                 ),
                 const SizedBox(height: 16),
-
+      
                 CustomButton(
                   onPressed: () {
                     if (mediaManager.isNotEmpty) {
@@ -133,17 +133,15 @@ class _AddReportViewBodyState extends State<AddReportViewBody> {
                     } else {
                       buildSnackBar(
                         context: context,
-                        title: S.of(context).alert,
-                        message: S.of(context).mustAddMedia,
+                        title: 'تنبيه',
+                        message: 'يجب إضافة صورة أو فيديو واحد على الأقل',
                         contentType: ContentType.warning,
                       );
                     }
                   },
-                  text: S.of(context).sendingReport,
-                  // gradientColors: AppTheme.primaryGradientColors,
-                  // shadowColor: AppTheme.primaryShadowColor,
-                  backgroundColor: AppTheme.primaryColor,
-                  hasShadow: false,
+                  text: 'إرسال البلاغ',
+                  gradientColors: AppTheme.primaryGradientColors,
+                  shadowColor: AppTheme.primaryShadowColor,
                 ),
                 const SizedBox(height: 40),
               ],

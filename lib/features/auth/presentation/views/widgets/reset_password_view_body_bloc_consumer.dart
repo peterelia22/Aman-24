@@ -1,9 +1,7 @@
-import 'package:depi_project/app_theme.dart';
-import 'package:depi_project/generated/l10n.dart';
+import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/helpers/error_message_helper.dart';
 import '../../manager/cubits/reset_password_cubit/reset_password_cubit.dart';
 import 'reset_password_view_body.dart';
 
@@ -16,8 +14,10 @@ class ResetPasswordViewBodyBlocConsumer extends StatelessWidget {
       listener: (context, state) {
         if (state is ResetPasswordSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(S.of(context).passwardResetSuccessfully),
+            const SnackBar(
+              content: Text(
+                'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني',
+              ),
               backgroundColor: Colors.green,
               duration: Duration(seconds: 3),
             ),
@@ -28,7 +28,7 @@ class ResetPasswordViewBodyBlocConsumer extends StatelessWidget {
         if (state is ResetPasswordFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(getErrorMessage(context, state.message)),
+              content: Text(state.message),
               backgroundColor: AppTheme.primaryColor,
               duration: const Duration(seconds: 3),
             ),
@@ -36,9 +36,11 @@ class ResetPasswordViewBodyBlocConsumer extends StatelessWidget {
         }
       },
       builder: (context, state) {
+        //  تم التغيير من color: Colors.white إلى لون الخلفية الديناميكي
         return ModalProgressHUD(
           inAsyncCall: state is ResetPasswordLoading,
-          color: Colors.white,
+          color: Theme.of(context).scaffoldBackgroundColor, 
+          opacity: 0.7, // ترك الشفافية كما هي
           child: const ResetPasswordViewBody(),
         );
       },
@@ -62,17 +64,20 @@ class ModalProgressHUD extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+
     return Stack(
       children: [
         child,
         if (inAsyncCall)
           Opacity(
             opacity: opacity,
-            child: ModalBarrier(dismissible: false, color: color),
+            // color هنا هو اللون الذي تم تمريره ديناميكياً من الباني
+            child: ModalBarrier(dismissible: false, color: color), 
           ),
         if (inAsyncCall)
-          const Center(
-            child: CircularProgressIndicator(color: AppTheme.primaryColor),
+          Center(
+            child: CircularProgressIndicator(color: primaryColor),
           ),
       ],
     );

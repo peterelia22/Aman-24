@@ -1,10 +1,9 @@
-import 'package:depi_project/app_theme.dart';
+import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:depi_project/core/helpers/build_app_bar.dart';
 import 'package:depi_project/core/helpers/get_user.dart';
 import 'package:depi_project/core/services/get_it_service.dart';
 import 'package:depi_project/features/notifications/domain/repos/notifications_repo.dart';
 import 'package:depi_project/core/cubits/get_notifications_cubit/get_notifications_cubit.dart';
-import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,8 +17,9 @@ class NotificationsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final view = Scaffold(
-      backgroundColor: AppTheme.white,
-      appBar: buildAppBar(title: S.of(context).notifications),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: buildAppBar( context, title: 'الاشعارات',
+      ),
       body: const NotificationsViewBody(),
     );
 

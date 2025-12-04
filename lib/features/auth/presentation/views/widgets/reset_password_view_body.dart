@@ -1,10 +1,8 @@
-import 'package:depi_project/app_theme.dart';
+import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:depi_project/core/widgets/custom_button.dart';
 import 'package:depi_project/core/widgets/custom_text_field.dart';
-import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../manager/cubits/reset_password_cubit/reset_password_cubit.dart';
 
@@ -22,79 +20,86 @@ class _ResetPasswordViewBodyState extends State<ResetPasswordViewBody> {
 
   @override
   Widget build(BuildContext context) {
+    // جلب نمط النص الرئيسي الديناميكي
+    final textTheme = Theme.of(context).textTheme;
+    // جلب اللون الأساسي (primaryColor) بشكل ديناميكي
+    final primaryColor = Theme.of(context).primaryColor;
+
+
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.w),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Form(
           key: formKey,
           autovalidateMode: autovalidateMode,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 120.h),
+              const SizedBox(height: 120),
               Text(
-                S.of(context).resetPassword,
+                'إعادة تعيين كلمة المرور',
                 style: TextStyle(
-                  fontSize: 28.sp,
+                  fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: AppTheme.black,
+                  color: textTheme.titleMedium!.color,
                 ),
               ),
-              SizedBox(height: 12.h),
+              const SizedBox(height: 12),
               Text(
-                S.of(context).SendingEmailForNewPassword,
+                'أدخل بريدك الإلكتروني أو الرقم القومي وسنرسل لك رابط لإعادة تعيين كلمة المرور',
                 style: TextStyle(
-                  fontSize: 16.sp,
-                  color: Colors.grey.shade600,
+                  fontSize: 16,
+                  color: textTheme.titleMedium!.color,
                   height: 1.4,
                 ),
               ),
-              SizedBox(height: 40.h),
+              const SizedBox(height: 40),
               CustomTextField(
                 onSaved: (value) {
                   emailOrNationalId = value!;
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return S.of(context).enterEmailOrId;
+                    return 'برجاء إدخال البريد الإلكتروني أو الرقم القومي';
                   } else if (!value.contains('@') &&
                       !RegExp(r'^\d+$').hasMatch(value)) {
-                    return S.of(context).validEmailOrId;
+                    return 'برجاء إدخال بريد إلكتروني صالح أو رقم قومي صحيح';
                   }
                   return null;
                 },
-                labelText: S.of(context).emailOrId,
+                labelText: 'البريد الإلكتروني أو الرقم القومي',
                 hintText: 'example@mail.com ',
                 obscureText: false,
                 keyboardType: TextInputType.text,
               ),
-              SizedBox(height: 30.h),
+              const SizedBox(height: 30),
               CustomButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
                     context.read<ResetPasswordCubit>().resetPassword(
-                      emailOrNationalId,
-                    );
+                          emailOrNationalId,
+                        );
                   } else {
                     autovalidateMode = AutovalidateMode.always;
                   }
                 },
-                text: S.of(context).sendingLinkReset,
-                gradientColors: AppTheme.primaryGradientColors,
+                text: 'إرسال رابط إعادة التعيين',
+                gradientColors: AppTheme.primaryGradientColors, 
                 shadowColor: AppTheme.primaryShadowColor,
               ),
-              SizedBox(height: 20.h),
+              const SizedBox(height: 20),
               Center(
                 child: TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    S.of(context).backSignIn,
+                    'العودة لتسجيل الدخول',
                     style: TextStyle(
-                      color: AppTheme.primaryColor,
-                      fontSize: 16.sp,
+                      // 🛠️ التعديل الثالث: استخدام اللون الأساسي الديناميكي
+                      color: primaryColor,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

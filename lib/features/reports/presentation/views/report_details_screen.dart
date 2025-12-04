@@ -1,12 +1,10 @@
-import 'package:depi_project/app_theme.dart';
+import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:depi_project/core/entities/report_entity.dart';
 import 'package:depi_project/core/enums/report_status_enums.dart';
 import 'package:depi_project/core/helpers/build_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:depi_project/features/reports/presentation/widgets/media_thumbnail.dart';
-import 'package:depi_project/generated/l10n.dart';
 
 class ReportDetailsScreen extends StatelessWidget {
   final ReportEntity report;
@@ -31,35 +29,32 @@ class ReportDetailsScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: buildAppBar(title: S.of(context).reportDetails),
+      appBar: buildAppBar( context, title: 'تفاصيل البلاغ' ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.w),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               report.title,
-              style: TextStyle(
-                fontSize: 24.sp,
+              style:  TextStyle(
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: AppTheme.black,
+                 color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
-            SizedBox(height: 16.h),
+            const SizedBox(height: 16),
 
             Row(
               children: [
-                Text(
-                  '${S.of(context).status}:',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+                const Text(
+                  'الحالة:',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(width: 8.w),
+                const SizedBox(width: 8),
                 Chip(
                   label: Text(
-                    report.getStatusDisplayName(context),
+                    report.statusDisplayName,
                     style: TextStyle(
                       color: AppTheme.white,
                       fontWeight: FontWeight.w600,
@@ -69,45 +64,38 @@ class ReportDetailsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Divider(height: 32.h),
+            const Divider(height: 32),
 
-            Text(
-              '${S.of(context).description}:',
-              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+            const Text(
+              'الوصف:',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8.h),
-            Text(report.description, style: TextStyle(fontSize: 16.sp)),
-            Divider(height: 32.h),
+            const SizedBox(height: 8),
+            Text(report.description, style: const TextStyle(fontSize: 16)),
+            const Divider(height: 32),
 
             if (report.address != null && report.address!.isNotEmpty)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${S.of(context).address}:',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  const Text(
+                    'الموقع:',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8.h),
+                  const SizedBox(height: 8),
                   Row(
                     children: [
-                      Icon(
-                        Icons.location_on,
-                        color: AppTheme.darkGrey,
-                        size: 20.sp,
-                      ),
-                      SizedBox(width: 8.w),
+                      const Icon(Icons.location_on, color: AppTheme.darkGrey),
+                      const SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           report.address!,
-                          style: TextStyle(fontSize: 16.sp),
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ),
                     ],
                   ),
-                  Divider(height: 32.h),
+                  const Divider(height: 32),
                 ],
               ),
 
@@ -116,16 +104,13 @@ class ReportDetailsScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${S.of(context).media}:',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  const Text(
+                    'الصور/الفيديو:',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8.h),
+                  const SizedBox(height: 8),
                   SizedBox(
-                    height: 100.h,
+                    height: 100,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: report.mediaUrls.length > 4
@@ -139,7 +124,7 @@ class ReportDetailsScreen extends StatelessWidget {
                             ? report.mediaUrls.length - 4
                             : 0;
                         return Padding(
-                          padding: EdgeInsets.only(right: 8.w),
+                          padding: const EdgeInsets.only(right: 8.0),
                           child: MediaThumbnail(
                             mediaUrl: url,
                             showMoreIndicator: showMore,
@@ -149,35 +134,37 @@ class ReportDetailsScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  Divider(height: 32.h),
+                  const Divider(height: 32),
                 ],
               ),
 
             // (Admin Comment)
             if (report.adminComment != null && report.adminComment!.isNotEmpty)
               Container(
-                padding: EdgeInsets.all(12.w),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(8.r),
+                  color: Theme.of(context).brightness == Brightness.dark 
+                   ? const Color.fromARGB(255, 38, 41, 43)
+                    : AppTheme.lightGrey,
+                  borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: AppTheme.darkGrey.withOpacity(0.5)),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      '${S.of(context).adminComment}:',
+                    const Text(
+                      'تعليق المسؤول:',
                       style: TextStyle(
-                        fontSize: 16.sp,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppTheme.primaryColor,
                       ),
                     ),
-                    SizedBox(width: 8.w),
+                    const SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         report.adminComment!,
-                        style: TextStyle(fontSize: 16.sp),
+                        style:  TextStyle(color: Theme.of(context).colorScheme.onSurface,fontSize: 16),
                       ),
                     ),
                   ],

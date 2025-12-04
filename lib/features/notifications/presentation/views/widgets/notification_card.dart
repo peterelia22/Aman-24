@@ -1,7 +1,6 @@
-import 'package:depi_project/app_theme.dart';
+import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/cubits/get_notifications_cubit/get_notifications_cubit.dart';
 import '../../../../../core/helpers/format_date_time.dart';
@@ -16,25 +15,25 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formattedDate = formatDateTime(
-      notification.timestamp.toLocal(),
-      context,
-    );
+    final formattedDate = formatDateTime(notification.timestamp.toLocal());
     final statusColor = getStatusColor(notification.status);
-    final statusLabel = getStatusText(context, notification.status);
+    final statusLabel = getStatusText(notification.status);
 
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(12),
         onTap: () => handleTap(context),
         child: Container(
           decoration: BoxDecoration(
-            color: notification.isRead ? AppTheme.lightGrey : AppTheme.lightRed,
-            borderRadius: BorderRadius.circular(12.r),
+          color: Theme.of(context).brightness == Brightness.dark 
+         ? notification.isRead ? const Color.fromARGB(255, 38, 41, 43) : const Color.fromARGB(255, 230, 103, 96)
+         : notification.isRead ? AppTheme.lightGrey : AppTheme.lightRed,
+            // color: notification.isRead ? AppTheme.lightGrey : AppTheme.lightRed,
+            borderRadius: BorderRadius.circular(12),
             border: Border.all(color: AppTheme.primaryColor.withOpacity(0.1)),
           ),
-          padding: EdgeInsets.all(16.w),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -42,30 +41,30 @@ class NotificationCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      notification.getLocalizedTitle(context),
+                      notification.title,
                       style: TextStyle(
-                        fontSize: 16.sp,
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: AppTheme.black,
+                        color: Theme.of(context).colorScheme.onSurface
                       ),
                       textAlign: TextAlign.right,
                     ),
                   ),
-                  if (!notification.isRead) SizedBox(width: 8.w),
+                  if (!notification.isRead) const SizedBox(width: 8),
                   if (!notification.isRead)
-                    CircleAvatar(
-                      radius: 5.r,
+                    const CircleAvatar(
+                      radius: 5,
                       backgroundColor: AppTheme.primaryColor,
                     ),
                 ],
               ),
-              SizedBox(height: 8.h),
+              const SizedBox(height: 8),
               Text(
-                notification.getLocalizedMessage(context),
-                style: TextStyle(fontSize: 14.sp, color: AppTheme.black),
+                notification.message,
+                style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.onSurface),
                 textAlign: TextAlign.right,
               ),
-              SizedBox(height: 12.h),
+              const SizedBox(height: 12),
               Row(
                 children: [
                   Chip(
@@ -73,18 +72,15 @@ class NotificationCard extends StatelessWidget {
                     backgroundColor: statusColor.withOpacity(0.15),
                     labelStyle: TextStyle(
                       color: statusColor,
-                      fontSize: 12.sp,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                   ),
                   const Spacer(),
                   Text(
                     formattedDate,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      color: Colors.grey.shade600,
-                    ),
+                    style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface),
                     textAlign: TextAlign.right,
                   ),
                 ],

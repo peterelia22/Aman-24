@@ -1,12 +1,10 @@
 import 'dart:developer';
 
+import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:depi_project/core/widgets/custom_password_field.dart';
-import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../app_theme.dart';
 import '../../../../../core/widgets/custom_button.dart';
 import '../../../../../core/widgets/custom_text_field.dart';
 import '../../../domain/entities/user_entity.dart';
@@ -28,157 +26,157 @@ class _SignupViewBodyState extends State<SignupViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: Form(
-            key: formKey,
-            autovalidateMode: autovalidateMode,
-            child: Column(
-              children: [
-                SizedBox(height: 50.h),
-                CustomTextField(
-                  onSaved: (value) {
-                    firstName = value!;
-                  },
-                  labelText: S.of(context).fristName,
-                  hintText: S.of(context).fristNameEx,
-                  obscureText: false,
-                  keyboardType: TextInputType.name,
-                ),
-                SizedBox(height: 16.h),
-                CustomTextField(
-                  onSaved: (value) {
-                    lastName = value!;
-                  },
-                  labelText: S.of(context).LastName,
-                  hintText: S.of(context).LastNameEx,
-                  obscureText: false,
-                  keyboardType: TextInputType.name,
-                ),
-                SizedBox(height: 16.h),
-                CustomTextField(
-                  onSaved: (value) {
-                    nationalId = value!;
-                  },
-                  labelText: S.of(context).nationalID,
-                  hintText: '29XXXXXXXXXXXX',
-                  obscureText: false,
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return S.of(context).enterNationalId;
-                    } else if (!RegExp(r'^\d+$').hasMatch(value)) {
-                      return S.of(context).nationalIdOnlyNums;
-                    } else if (value.length != 14) {
-                      return S.of(context).nationalIdAtleastNums;
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 16.h),
-                CustomTextField(
-                  onSaved: (value) {
-                    phoneNumber = value!;
-                  },
-                  labelText: S.of(context).phoneNumber,
-                  hintText: '01XXXXXXXXX',
-                  obscureText: false,
-                  keyboardType: TextInputType.phone,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return S.of(context).enterPhone;
-                    } else if (!RegExp(r'^\d+$').hasMatch(value)) {
-                      return S.of(context).phoneNumberOnlyNums;
-                    } else if (value.length != 11) {
-                      return S.of(context).phoneNumber11;
-                    }
-                    return null;
-                  },
-                ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24),
+        child: Form(
+          key: formKey,
+          autovalidateMode: autovalidateMode,
+          child: Column(
+            children: [
+              SizedBox(height: 50),
+              CustomTextField(
+                onSaved: (value) {
+                  firstName = value!;
+                },
+                labelText: 'الاسم الاول',
+                hintText: 'محمد',
+                obscureText: false,
+                keyboardType: TextInputType.name,
+              ),
+              SizedBox(height: 16),
+              CustomTextField(
+                onSaved: (value) {
+                  lastName = value!;
+                },
+                labelText: 'الاسم الاخير',
+                hintText: 'احمد',
+                obscureText: false,
+                keyboardType: TextInputType.name,
+              ),
+              SizedBox(height: 16),
+              CustomTextField(
+                onSaved: (value) {
+                  nationalId = value!;
+                },
+                labelText: 'الرقم القومي',
+                hintText: '29XXXXXXXXXXXX',
+                obscureText: false,
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'برجاء إدخال الرقم القومي';
+                  } else if (!RegExp(r'^\d+$').hasMatch(value)) {
+                    return 'الرقم القومي يجب أن يحتوي على أرقام فقط';
+                  } else if (value.length != 14) {
+                    return 'الرقم القومي يجب أن يتكون من 14 رقمًا';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              CustomTextField(
+                onSaved: (value) {
+                  phoneNumber = value!;
+                },
+                labelText: 'رقم الهاتف',
+                hintText: '01XXXXXXXXX',
+                obscureText: false,
+                keyboardType: TextInputType.phone,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'برجاء إدخال رقم الهاتف';
+                  } else if (!RegExp(r'^\d+$').hasMatch(value)) {
+                    return 'رقم الهاتف يجب أن يحتوي على أرقام فقط';
+                  } else if (value.length != 11) {
+                    return 'رقم الهاتف يجب أن يتكون من 11 رقمًا';
+                  }
+                  return null;
+                },
+              ),
 
-                SizedBox(height: 16.h),
-                CustomTextField(
-                  onSaved: (value) {
-                    email = value!;
-                  },
-                  labelText: S.of(context).email,
-                  hintText: 'example@mail.com',
-                  obscureText: false,
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                SizedBox(height: 16.h),
-                CustomPasswordField(
-                  onSaved: (value) {
-                    password = value!;
-                  },
-                ),
-                SizedBox(height: 40.h),
-                CustomButton(
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
-                      log(
-                        'email: $email password: $password  firstName: $firstName  lastName: $lastName phoneNumber: $phoneNumber nationalId: $nationalId',
-                      );
-                      context
-                          .read<SignupCubit>()
-                          .createUserWithEmailAndPassword(
-                            UserEntity(
-                              email: email,
-                              firstName: firstName,
-                              lastName: lastName,
-                              phoneNumber: phoneNumber,
-                              nationalId: nationalId,
-                              uId: '',
-                            ),
-                            password,
-                          );
-                    } else {
-                      setState(() {
-                        autovalidateMode = AutovalidateMode.always;
-                      });
-                    }
-                  },
-                  text: S.of(context).creatingAccount,
-                  textColor: Colors.white,
-                  backgroundColor: AppTheme.primaryColor,
-                ),
-                SizedBox(height: 20.h),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Column(
-                    children: [
-                      Text(S.of(context).havingAccount),
-                      SizedBox(height: 20.h),
-                      CustomButton(
-                        text: S.of(context).signIn,
-                        gradientColors: [
-                          const Color.fromARGB(130, 228, 222, 222),
-                          const Color.fromARGB(130, 239, 191, 191),
-                          const Color.fromARGB(130, 228, 222, 222),
-                        ],
-                        shadowColor: const Color.fromARGB(
-                          255,
-                          231,
-                          124,
-                          124,
-                        ).withOpacity(0.5),
-
-                        borderWidth: 1.5.w,
-                        hasShadow: false,
-                        textColor: const Color.fromARGB(255, 11, 11, 11),
+              SizedBox(height: 16),
+              CustomTextField(
+                onSaved: (value) {
+                  email = value!;
+                },
+                labelText: 'البريد الالكتروني',
+                hintText: 'example@mail.com',
+                obscureText: false,
+                keyboardType: TextInputType.emailAddress,
+              ),
+              SizedBox(height: 16),
+              CustomPasswordField(
+                onSaved: (value) {
+                  password = value!;
+                },
+              ),
+              SizedBox(height: 40),
+              CustomButton(
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    formKey.currentState!.save();
+                    log(
+                      'email: $email password: $password  firstName: $firstName  lastName: $lastName phoneNumber: $phoneNumber nationalId: $nationalId',
+                    );
+                    context.read<SignupCubit>().createUserWithEmailAndPassword(
+                      UserEntity(
+                        email: email,
+                        firstName: firstName,
+                        lastName: lastName,
+                        phoneNumber: phoneNumber,
+                        nationalId: nationalId,
+                        uId: '',
                       ),
-                    ],
-                  ),
+                      password,
+                    );
+                  } else {
+                    setState(() {
+                      autovalidateMode = AutovalidateMode.always;
+                    });
+                  }
+                },
+                text: ' انشاء حساب',
+                gradientColors: AppTheme.primaryGradientColors,
+                shadowColor: const Color.fromARGB(
+                  255,
+                  190,
+                  122,
+                  122,
+                ).withOpacity(0.2),
+              ),
+              SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Column(
+                  children: [
+                    Text(' لديك حساب؟'),
+                    SizedBox(height: 20),
+                    CustomButton(
+                      text: 'تسجيل الدخول',
+                      gradientColors: [
+                        const Color.fromARGB(130, 228, 222, 222),
+                        const Color.fromARGB(130, 239, 191, 191),
+                        const Color.fromARGB(130, 228, 222, 222),
+                      ],
+                      shadowColor: const Color.fromARGB(
+                        255,
+                        231,
+                        124,
+                        124,
+                      ).withOpacity(0.5),
+
+                      borderWidth: 1.5,
+                      hasShadow: false,
+                      textColor: const Color.fromARGB(255, 50, 50, 50),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 40.h),
-              ],
-            ),
+              ),
+              SizedBox(height: 40),
+            ],
           ),
         ),
       ),

@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -25,15 +24,24 @@ class CustomTextField extends StatelessWidget {
   final void Function(String?)? onSaved;
   final String? Function(String?)? validator;
   final int maxLines;
+
   @override
   Widget build(BuildContext context) {
+    // الحصول على مخطط الألوان ونصوص الثيم
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(labelText),
+        // ⭐ labelText يستخدم bodyLarge من الثيم (يتغير لونه تلقائياً)
+        Text(
+          labelText,
+          style: textTheme.bodyLarge,
+        ),
         SizedBox(height: 8.h),
         ClipRRect(
-          borderRadius: BorderRadius.circular(12.r),
+          borderRadius: BorderRadius.circular(16.r),
           child: Stack(
             children: [
               BackdropFilter(
@@ -42,28 +50,20 @@ class CustomTextField extends StatelessWidget {
                   constraints: BoxConstraints(
                     minHeight: maxLines == 1 ? 55.h : 55.h * maxLines,
                   ),
+                  // ⭐ استخدام ألوان الثيم للخلفية والحدود
                   decoration: BoxDecoration(
-                    // color: const Color.fromARGB(
-                    //   255,
-                    //   172,
-                    //   170,
-                    //   170,
-                    // ).withOpacity(0.15),
+                    // surfaceVariant يستخدم كلون قريب من الخلفية مع شفافية
+                    color: colorScheme.surfaceVariant.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(16.r),
                     border: Border.all(
-                      color: const Color.fromARGB(
-                        255,
-                        13,
-                        13,
-                        13,
-                      ).withOpacity(0.12),
+                      // outline يستخدم كلون للحدود
+                      color: colorScheme.outline.withOpacity(0.2),
                     ),
                   ),
                 ),
               ),
               TextFormField(
-                validator:
-                    validator ??
+                validator: validator ??
                     (value) {
                       if (value == null || value.isEmpty) {
                         return S.of(context).fieldRequired;
@@ -74,17 +74,17 @@ class CustomTextField extends StatelessWidget {
                 keyboardType: keyboardType,
                 obscureText: obscureText,
                 maxLines: maxLines,
-                style: const TextStyle(color: Color.fromARGB(255, 3, 3, 3)),
+                // ⭐ نص الإدخال يستخدم bodyMedium من الثيم
+                style: textTheme.bodyMedium?.copyWith(
+                  // onSurface هو لون النص الأساسي في الثيم (أسود أو أبيض)
+                  color: colorScheme.onSurface, 
+                ), 
                 decoration: InputDecoration(
                   suffixIcon: suffixIcon,
                   hintText: hintText,
-                  hintStyle: TextStyle(
-                    color: const Color.fromARGB(
-                      255,
-                      13,
-                      13,
-                      13,
-                    ).withOpacity(0.7),
+                  // ⭐ hintStyle يستخدم bodyMedium من الثيم مع شفافية
+                  hintStyle: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurface.withOpacity(0.6),
                   ),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(
