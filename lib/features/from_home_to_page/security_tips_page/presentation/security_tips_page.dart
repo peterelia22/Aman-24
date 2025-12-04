@@ -1,5 +1,4 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:depi_project/core/helpers/build_app_bar.dart';
 import 'package:flutter/material.dart';
 

@@ -17,7 +17,7 @@ class NotificationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final formattedDate = formatDateTime(notification.timestamp.toLocal());
     final statusColor = getStatusColor(notification.status);
-    final statusLabel = getStatusText(notification.status);
+    final statusLabel = getStatusText(context, notification.status);
 
     return Material(
       color: Colors.transparent,

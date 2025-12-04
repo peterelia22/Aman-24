@@ -65,7 +65,7 @@ class ReportDetailCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Chip(
                     label: Text(
-                      data.statusDisplayName,
+                      data.getStatusDisplayName(context),
                       style: TextStyle(
                         color: AppTheme.white,
                         fontSize: 12,

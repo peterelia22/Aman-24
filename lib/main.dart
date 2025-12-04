@@ -57,7 +57,9 @@ class DEPI extends StatelessWidget {
                   debugShowCheckedModeBanner: false,
                   theme: AppTheme.lightTheme,
                   darkTheme: AppTheme.darkTheme,
-                  themeMode: themeNotifier.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+                  themeMode: themeNotifier.isDarkMode
+                      ? ThemeMode.dark
+                      : ThemeMode.light,
                   localizationsDelegates: const [
                     S.delegate,
                     GlobalMaterialLocalizations.delegate,
@@ -77,4 +79,3 @@ class DEPI extends StatelessWidget {
     );
   }
 }
-

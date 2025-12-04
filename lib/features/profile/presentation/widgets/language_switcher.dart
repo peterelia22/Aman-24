@@ -1,8 +1,9 @@
-import 'package:depi_project/app_theme.dart';
 import 'package:depi_project/core/cubits/locale_cubit/locale_cubit.dart';
 import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/theme/app_theme.dart';
 
 class LanguageSwitcher extends StatelessWidget {
   const LanguageSwitcher({super.key});

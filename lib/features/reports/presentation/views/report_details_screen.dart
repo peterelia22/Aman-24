@@ -54,7 +54,7 @@ class ReportDetailsScreen extends StatelessWidget {
                 const SizedBox(width: 8),
                 Chip(
                   label: Text(
-                    report.statusDisplayName,
+                    report.getStatusDisplayName(context),
                     style: TextStyle(
                       color: AppTheme.white,
                       fontWeight: FontWeight.w600,

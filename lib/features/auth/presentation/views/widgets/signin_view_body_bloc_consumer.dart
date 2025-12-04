@@ -1,5 +1,5 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:depi_project/app_theme.dart';
+import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:depi_project/features/home/presentation/views/main_screen.dart';
 import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
