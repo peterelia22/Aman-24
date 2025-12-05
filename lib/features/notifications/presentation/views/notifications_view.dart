@@ -17,8 +17,7 @@ class NotificationsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final view = Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: buildAppBar( context, title: 'الاشعارات',
-      ),
+      appBar: buildAppBar(context, title: 'الاشعارات'),
       body: const NotificationsViewBody(),
     );
 

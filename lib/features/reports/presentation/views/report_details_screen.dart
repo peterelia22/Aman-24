@@ -29,7 +29,7 @@ class ReportDetailsScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: buildAppBar( context, title: 'تفاصيل البلاغ' ),
+      appBar: buildAppBar(context, title: 'تفاصيل البلاغ'),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -37,10 +37,10 @@ class ReportDetailsScreen extends StatelessWidget {
           children: [
             Text(
               report.title,
-              style:  TextStyle(
+              style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                 color: Theme.of(context).colorScheme.onSurface,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 16),
@@ -143,9 +143,9 @@ class ReportDetailsScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).brightness == Brightness.dark 
-                   ? const Color.fromARGB(255, 38, 41, 43)
-                    : AppTheme.lightGrey,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? const Color.fromARGB(255, 38, 41, 43)
+                      : AppTheme.lightGrey,
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: AppTheme.darkGrey.withOpacity(0.5)),
                 ),
@@ -164,7 +164,10 @@ class ReportDetailsScreen extends StatelessWidget {
                     Expanded(
                       child: Text(
                         report.adminComment!,
-                        style:  TextStyle(color: Theme.of(context).colorScheme.onSurface,fontSize: 16),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ],

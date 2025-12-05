@@ -66,9 +66,8 @@ class SecurityTipsPage extends StatelessWidget {
     final bool isDarkMode = theme.brightness == Brightness.dark;
 
     return Scaffold(
-    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: buildAppBar( context, title: 'نصائح أمنية',
-      ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: buildAppBar(context, title: 'نصائح أمنية'),
       body: ListView.builder(
         padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
         itemCount: tips.length,
@@ -81,10 +80,16 @@ class SecurityTipsPage extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isDarkMode ? theme.colorScheme.surface : Colors.white,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: isDarkMode ? Colors.grey.shade700 : Colors.grey.shade200,),
+                border: Border.all(
+                  color: isDarkMode
+                      ? Colors.grey.shade700
+                      : Colors.grey.shade200,
+                ),
                 boxShadow: [
                   BoxShadow(
-                    color: isDarkMode ? Colors.black.withOpacity(0.4) : Colors.black.withOpacity(0.05),
+                    color: isDarkMode
+                        ? Colors.black.withOpacity(0.4)
+                        : Colors.black.withOpacity(0.05),
                     blurRadius: 4,
                     offset: const Offset(0, 2),
                   ),
@@ -98,7 +103,7 @@ class SecurityTipsPage extends StatelessWidget {
                 title: Text(
                   tip["text"],
                   style: TextStyle(
-                   color: theme.colorScheme.onSurface,
+                    color: theme.colorScheme.onSurface,
                     fontSize: 15,
                     height: 1.4,
                     fontWeight: FontWeight.w500,

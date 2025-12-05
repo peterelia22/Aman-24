@@ -17,7 +17,7 @@ class AppTheme {
   static final Color primaryShadowColor = const Color(
     0xFFFF7F37,
   ).withOpacity(0.4);
-static const darkBackground = Color.fromARGB(255, 34, 33, 33);
+  static const darkBackground = Color.fromARGB(255, 34, 33, 33);
   static const darkSurface = Color.fromARGB(255, 38, 41, 43);
   //
 
@@ -25,22 +25,27 @@ static const darkBackground = Color.fromARGB(255, 34, 33, 33);
     primaryColor: primaryColor,
     scaffoldBackgroundColor: white,
     brightness: Brightness.light,
+    fontFamily: 'Cairo',
 
     // مخطط الألوان (ColorScheme) - ضروري لعمل الـ Themes
     colorScheme: ColorScheme.light(
       primary: primaryColor,
       onSurface: black, // لون النص الأساسي للأيقونات والـ Labels
-      surfaceVariant: const Color.fromARGB(255, 225, 223, 223), // لون خلفية حقول الإدخال
+      surfaceVariant: const Color.fromARGB(
+        255,
+        225,
+        223,
+        223,
+      ), // لون خلفية حقول الإدخال
     ),
 
-//(Appbar Theme)
+    //(Appbar Theme)
     appBarTheme: AppBarTheme(
       backgroundColor: white,
       foregroundColor: primaryColor,
-
     ),
 
-    //(BottomNavigationBarTheme) 
+    //(BottomNavigationBarTheme)
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       backgroundColor: white,
@@ -72,6 +77,7 @@ static const darkBackground = Color.fromARGB(255, 34, 33, 33);
     primaryColor: primaryColor,
     scaffoldBackgroundColor: darkBackground,
     brightness: Brightness.dark,
+    fontFamily: 'Cairo',
 
     // مخطط الألوان (ColorScheme)
     colorScheme: ColorScheme.dark(
@@ -80,7 +86,7 @@ static const darkBackground = Color.fromARGB(255, 34, 33, 33);
       onSurface: white, // لون النص الأساسي للأيقونات والـ Labels
       surface: lightGrey,
       surfaceVariant: darkGrey,
-       // لون خلفية حقول الإدخال
+      // لون خلفية حقول الإدخال
     ),
 
     // (AppBar)
@@ -89,7 +95,7 @@ static const darkBackground = Color.fromARGB(255, 34, 33, 33);
       foregroundColor: white,
     ),
 
-    //  (BottomNavigationBarTheme) 
+    //  (BottomNavigationBarTheme)
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       backgroundColor: darkSurface,
@@ -114,6 +120,5 @@ static const darkBackground = Color.fromARGB(255, 34, 33, 33);
         color: white,
       ),
     ),
-
   );
 }

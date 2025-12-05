@@ -11,15 +11,11 @@ import 'widgets/add_report_view_body_bloc_consumer.dart';
 class AddReportView extends StatelessWidget {
   const AddReportView({super.key});
   static const routeName = 'add_report';
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-    appBar: buildAppBar(
-      context, 
-      title: 'تقديم بلاغ',  
-    ),
+      appBar: buildAppBar(context, title: 'تقديم بلاغ'),
 
       body: BlocProvider(
         create: (context) =>

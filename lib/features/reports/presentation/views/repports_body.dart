@@ -21,8 +21,8 @@ class _RepportsBodyState extends State<RepportsBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: buildAppBar( context, title: 'بلاغاتي'),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: buildAppBar(context, title: 'بلاغاتي'),
       body: BlocProvider(
         create: (_) => GetUserReportsCubit()..listenToUserReports(),
         child: BlocBuilder<GetUserReportsCubit, GetUserReportsState>(

@@ -35,10 +35,7 @@ class CustomTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // ⭐ labelText يستخدم bodyLarge من الثيم (يتغير لونه تلقائياً)
-        Text(
-          labelText,
-          style: textTheme.bodyLarge,
-        ),
+        Text(labelText, style: textTheme.bodyLarge),
         SizedBox(height: 8.h),
         ClipRRect(
           borderRadius: BorderRadius.circular(16.r),
@@ -63,7 +60,8 @@ class CustomTextField extends StatelessWidget {
                 ),
               ),
               TextFormField(
-                validator: validator ??
+                validator:
+                    validator ??
                     (value) {
                       if (value == null || value.isEmpty) {
                         return S.of(context).fieldRequired;
@@ -77,8 +75,8 @@ class CustomTextField extends StatelessWidget {
                 // ⭐ نص الإدخال يستخدم bodyMedium من الثيم
                 style: textTheme.bodyMedium?.copyWith(
                   // onSurface هو لون النص الأساسي في الثيم (أسود أو أبيض)
-                  color: colorScheme.onSurface, 
-                ), 
+                  color: colorScheme.onSurface,
+                ),
                 decoration: InputDecoration(
                   suffixIcon: suffixIcon,
                   hintText: hintText,
