@@ -260,6 +260,21 @@ class S {
     return Intl.message('Language', name: 'language', desc: '', args: []);
   }
 
+  /// `Theme`
+  String get themeMode {
+    return Intl.message('Theme', name: 'themeMode', desc: '', args: []);
+  }
+
+  /// `Light Mode`
+  String get lightMode {
+    return Intl.message('Light Mode', name: 'lightMode', desc: '', args: []);
+  }
+
+  /// `Dark Mode`
+  String get darkMode {
+    return Intl.message('Dark Mode', name: 'darkMode', desc: '', args: []);
+  }
+
   /// `Logout`
   String get logout {
     return Intl.message('Logout', name: 'logout', desc: '', args: []);
@@ -293,6 +308,11 @@ class S {
       desc: '',
       args: [],
     );
+  }
+
+  /// `Loading...`
+  String get loading {
+    return Intl.message('Loading...', name: 'loading', desc: '', args: []);
   }
 
   /// `Enable two-factor authentication (2FA) to protect your accounts from hacking.`
@@ -426,8 +446,8 @@ class S {
   }
 
   /// `HelpLine`
-  String get HelpLine {
-    return Intl.message('HelpLine', name: 'HelpLine', desc: '', args: []);
+  String get helpLine {
+    return Intl.message('HelpLine', name: 'helpLine', desc: '', args: []);
   }
 
   /// `Electrical emergency`
@@ -656,10 +676,10 @@ class S {
   }
 
   /// `Enter your email address or national ID number and we will send you a link to reset your password.`
-  String get SendingEmailForNewPassword {
+  String get sendingEmailForNewPassword {
     return Intl.message(
       'Enter your email address or national ID number and we will send you a link to reset your password.',
-      name: 'SendingEmailForNewPassword',
+      name: 'sendingEmailForNewPassword',
       desc: '',
       args: [],
     );
@@ -685,9 +705,14 @@ class S {
     );
   }
 
-  /// `Email or ID`
+  /// `Email or National ID`
   String get emailOrId {
-    return Intl.message('Email or ID', name: 'emailOrId', desc: '', args: []);
+    return Intl.message(
+      'Email or National ID',
+      name: 'emailOrId',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Sending Reset Link`
@@ -741,13 +766,13 @@ class S {
   }
 
   /// `Last Name`
-  String get LastName {
-    return Intl.message('Last Name', name: 'LastName', desc: '', args: []);
+  String get lastName {
+    return Intl.message('Last Name', name: 'lastName', desc: '', args: []);
   }
 
   /// `Stark`
-  String get LastNameEx {
-    return Intl.message('Stark', name: 'LastNameEx', desc: '', args: []);
+  String get lastNameEx {
+    return Intl.message('Stark', name: 'lastNameEx', desc: '', args: []);
   }
 
   /// `Please enter your national ID`
@@ -835,10 +860,10 @@ class S {
     return Intl.message('Call Now', name: 'callNow', desc: '', args: []);
   }
 
-  /// `Do you want to call`
+  /// `Do you want to call `
   String get doYouWantToCall {
     return Intl.message(
-      'Do you want to call',
+      'Do you want to call ',
       name: 'doYouWantToCall',
       desc: '',
       args: [],

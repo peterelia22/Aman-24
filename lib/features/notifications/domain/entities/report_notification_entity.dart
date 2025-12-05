@@ -31,7 +31,15 @@ class ReportNotificationEntity {
   // Get localized message with status
   String getLocalizedMessage(BuildContext context) {
     final statusText = _getStatusText(context);
-    return '${S.of(context).reportStatusChangedTo} $statusText';
+    final locale = Localizations.localeOf(context);
+
+    // For English: "Your report status has been changed to [status]"
+    // For Arabic: "تم تغيير حالة البلاغ الخاص بك إلى [status]"
+    if (locale.languageCode == 'en') {
+      return '${S.of(context).reportStatusChangedTo} $statusText';
+    } else {
+      return '${S.of(context).reportStatusChangedTo} $statusText';
+    }
   }
 
   String _getStatusText(BuildContext context) {

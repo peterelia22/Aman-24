@@ -2,6 +2,7 @@ import 'package:depi_project/core/helpers/build_app_bar.dart';
 import 'package:depi_project/core/repos/media_repo/media_repo.dart';
 import 'package:depi_project/features/add_report/domain/repos/add_report_repo.dart';
 import 'package:depi_project/features/add_report/presentation/manager/cubits/add_report_cubit/add_report_cubit.dart';
+import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,7 +16,7 @@ class AddReportView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context, title: 'تقديم بلاغ'),
+      appBar: buildAppBar(context, title: S.of(context).submitReport),
 
       body: BlocProvider(
         create: (context) =>

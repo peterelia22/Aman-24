@@ -1,30 +1,33 @@
 import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:depi_project/core/entities/report_entity.dart';
 import 'package:depi_project/core/enums/report_status_enums.dart';
+import 'package:depi_project/core/widgets/status_chip.dart';
 import 'package:depi_project/features/reports/presentation/views/report_details_screen.dart';
+import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReportDetailCard extends StatelessWidget {
   final ReportEntity data;
   const ReportDetailCard({super.key, required this.data});
 
+  Color _getReportStatusColor(ReportStatusEnum status) {
+    switch (status) {
+      case ReportStatusEnum.pending:
+        return Colors.blueGrey.shade500;
+      case ReportStatusEnum.inReview:
+        return Colors.amber.shade700;
+      case ReportStatusEnum.investigating:
+        return Colors.orange.shade700;
+      case ReportStatusEnum.resolved:
+        return Colors.green.shade600;
+      case ReportStatusEnum.rejected:
+        return Colors.red.shade600;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    Color getReportStatusColor(ReportStatusEnum status) {
-      switch (status) {
-        case ReportStatusEnum.pending:
-          return Colors.blueGrey.shade500;
-        case ReportStatusEnum.inReview:
-          return Colors.amber.shade700;
-        case ReportStatusEnum.investigating:
-          return Colors.orange.shade700;
-        case ReportStatusEnum.resolved:
-          return Colors.green.shade600;
-        case ReportStatusEnum.rejected:
-          return Colors.red.shade600;
-      }
-    }
-
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -35,15 +38,17 @@ class ReportDetailCard extends StatelessWidget {
         );
       },
       child: Card(
-        margin: const EdgeInsets.all(8),
+        margin: EdgeInsets.all(8.w),
         elevation: 2,
         shadowColor: AppTheme.black,
         color: Theme.of(context).brightness == Brightness.dark
             ? const Color.fromARGB(255, 38, 41, 43)
             : AppTheme.lightGrey,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.r),
+        ),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -55,53 +60,46 @@ class ReportDetailCard extends StatelessWidget {
                       data.title,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSurface,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Chip(
-                    label: Text(
-                      data.getStatusDisplayName(context),
-                      style: TextStyle(
-                        color: AppTheme.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    backgroundColor: getReportStatusColor(data.status),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 4,
-                      vertical: 0,
-                    ),
+                  SizedBox(width: 8.w),
+                  StatusChip(
+                    label: data.getStatusDisplayName(context),
+                    statusColor: _getReportStatusColor(data.status),
                   ),
                 ],
               ),
-              const SizedBox(height: 3),
+              SizedBox(height: 3.h),
               Text(
                 data.description,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurface,
-                  fontSize: 12,
+                  fontSize: 12.sp,
                 ),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h),
               if (data.address != null && data.address!.isNotEmpty)
                 Row(
                   children: [
-                    Icon(Icons.location_on, size: 16, color: AppTheme.darkGrey),
-                    const SizedBox(width: 4),
+                    Icon(
+                      Icons.location_on,
+                      size: 16.sp,
+                      color: AppTheme.darkGrey,
+                    ),
+                    SizedBox(width: 4.w),
                     Expanded(
                       child: Text(
                         data.address!,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSurface,
-                          fontSize: 12,
+                          fontSize: 12.sp,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -109,12 +107,12 @@ class ReportDetailCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h),
               Text(
-                'تاريخ البلاغ : ${data.createdAt.day}/${data.createdAt.month}/${data.createdAt.year} ',
+                '${S.of(context).reportDate} : ${data.createdAt.day}/${data.createdAt.month}/${data.createdAt.year} ',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurface,
-                  fontSize: 10,
+                  fontSize: 10.sp,
                 ),
               ),
             ],

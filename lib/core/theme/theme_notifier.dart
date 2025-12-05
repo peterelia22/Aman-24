@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../utils/shared_preferences_singleton.dart';
 
 class ThemeNotifier extends ChangeNotifier {
   static const String prefKey = "isDarkMode";
@@ -17,14 +17,28 @@ class ThemeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _loadFromPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    _isDarkMode = prefs.getBool(prefKey) ?? false;
+  void setDarkMode() {
+    if (!_isDarkMode) {
+      _isDarkMode = true;
+      _saveToPrefs();
+      notifyListeners();
+    }
+  }
+
+  void setLightMode() {
+    if (_isDarkMode) {
+      _isDarkMode = false;
+      _saveToPrefs();
+      notifyListeners();
+    }
+  }
+
+  void _loadFromPrefs() {
+    _isDarkMode = SharedPreferencesSingleton.getBool(prefKey);
     notifyListeners();
   }
 
-  void _saveToPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(prefKey, _isDarkMode);
+  void _saveToPrefs() {
+    SharedPreferencesSingleton.setBool(prefKey, _isDarkMode);
   }
 }

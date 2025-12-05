@@ -22,12 +22,6 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "HelpLine": MessageLookupByLibrary.simpleMessage("خط المساعدة"),
-    "LastName": MessageLookupByLibrary.simpleMessage("الاسم الاخير"),
-    "LastNameEx": MessageLookupByLibrary.simpleMessage("طنطاوي"),
-    "SendingEmailForNewPassword": MessageLookupByLibrary.simpleMessage(
-      "أدخل عنوان بريدك الإلكتروني أو الرقم القومي وسنرسل لك رابطًا لإعادة تعيين كلمة المرور الخاصة بك.",
-    ),
     "accountCreationFailed": MessageLookupByLibrary.simpleMessage(
       "لم يتم إنشاء الحساب بنجاح. الرجاء المحاولة مرة أخرى.",
     ),
@@ -67,6 +61,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cyberFraudWarningContinue4": MessageLookupByLibrary.simpleMessage(
       " الإلكتروني لحماية نفسك",
     ),
+    "darkMode": MessageLookupByLibrary.simpleMessage("الوضع الداكن"),
     "dataLookupError": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ أثناء البحث عن البيانات",
     ),
@@ -88,7 +83,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "لقد تم استخدام هذا البريد الإلكتروني بالفعل.",
     ),
     "emailOrId": MessageLookupByLibrary.simpleMessage(
-      "البريد الالكتروني او الرقم القومي",
+      "البريد الإلكتروني أو الرقم القومي",
     ),
     "emergencyNumbers": MessageLookupByLibrary.simpleMessage("أرقام الطوارئ"),
     "english": MessageLookupByLibrary.simpleMessage("English"),
@@ -114,6 +109,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "errorRetrievingNationalId": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ أثناء استرجاع الرقم القومي",
+    ),
+    "errorWhileLouding": MessageLookupByLibrary.simpleMessage(
+      "خطأ أثناء التحميل",
     ),
     "failedToAddReport": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ أثناء إضافة البلاغ",
@@ -144,6 +142,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "fristNameEx": MessageLookupByLibrary.simpleMessage("محمد"),
     "greeting": MessageLookupByLibrary.simpleMessage("مرحباً"),
     "havingAccount": MessageLookupByLibrary.simpleMessage("هل لديك حساب ؟"),
+    "helpLine": MessageLookupByLibrary.simpleMessage("خط المساعدة"),
     "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
     "hour": MessageLookupByLibrary.simpleMessage("ساعة"),
     "hours": MessageLookupByLibrary.simpleMessage("ساعات"),
@@ -157,6 +156,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "معرف الإشعار غير صالح",
     ),
     "language": MessageLookupByLibrary.simpleMessage("اللغة"),
+    "lastName": MessageLookupByLibrary.simpleMessage("الاسم الاخير"),
+    "lastNameEx": MessageLookupByLibrary.simpleMessage("طنطاوي"),
+    "lightMode": MessageLookupByLibrary.simpleMessage("الوضع الفاتح"),
+    "loading": MessageLookupByLibrary.simpleMessage("جاري التحميل..."),
     "location": MessageLookupByLibrary.simpleMessage("الموقع (اختياري)"),
     "locationEx": MessageLookupByLibrary.simpleMessage("مثال: شارع الجمهورية"),
     "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
@@ -256,6 +259,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "إعادة تعيين كلمة المرور",
     ),
     "securityTips": MessageLookupByLibrary.simpleMessage("نصائح أمنية"),
+    "sendingEmailForNewPassword": MessageLookupByLibrary.simpleMessage(
+      "أدخل عنوان بريدك الإلكتروني أو الرقم القومي وسنرسل لك رابطًا لإعادة تعيين كلمة المرور الخاصة بك.",
+    ),
     "sendingLinkReset": MessageLookupByLibrary.simpleMessage(
       "ارسال رابط لإعادة التعيين",
     ),
@@ -279,6 +285,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "statusRejected": MessageLookupByLibrary.simpleMessage("مرفوض"),
     "statusResolved": MessageLookupByLibrary.simpleMessage("تم الحل"),
     "submitReport": MessageLookupByLibrary.simpleMessage("تقديم بلاغ"),
+    "themeMode": MessageLookupByLibrary.simpleMessage("الوضع"),
     "tip1": MessageLookupByLibrary.simpleMessage(
       "قم بتفعيل المصادقة الثنائية (2FA) لحماية حساباتك من الاختراق.",
     ),

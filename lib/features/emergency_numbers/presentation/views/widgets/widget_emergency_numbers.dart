@@ -1,6 +1,8 @@
 import 'package:depi_project/core/theme/app_theme.dart';
+import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WidgetEmergencyNumbers extends StatefulWidget {
   const WidgetEmergencyNumbers({
@@ -20,34 +22,34 @@ class WidgetEmergencyNumbers extends StatefulWidget {
 class _WidgetEmergencyNumbersState extends State<WidgetEmergencyNumbers> {
   bool _showCallConfirm = false;
 
-  _callNumber() async{
-    await FlutterPhoneDirectCaller.callNumber(widget.number);       
+  _callNumber() async {
+    await FlutterPhoneDirectCaller.callNumber(widget.number);
     setState(() {
       _showCallConfirm = false;
     });
   }
 
   @override
-  Widget build(BuildContext context) {           
+  Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch, 
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         InkWell(
-          onTap: (){      
+          onTap: () {
             setState(() {
               _showCallConfirm = !_showCallConfirm;
             });
           },
-          borderRadius: BorderRadius.circular(10),       
+          borderRadius: BorderRadius.circular(10.r),
           child: Container(
             decoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.dark
-            ? const Color.fromARGB(255, 230, 103, 96)
-            : AppTheme.lightRed,
-              borderRadius: BorderRadius.circular(10),
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? const Color.fromARGB(255, 230, 103, 96)
+                  : AppTheme.lightRed,
+              borderRadius: BorderRadius.circular(10.r),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(right: 16, left: 16, top: 16, bottom: 16),
+              padding: EdgeInsets.all(16.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -56,74 +58,86 @@ class _WidgetEmergencyNumbersState extends State<WidgetEmergencyNumbers> {
                     children: [
                       Text(
                         widget.text1,
-                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                             color: Theme.of(context).colorScheme.onSurface,
-                              fontWeight: FontWeight.bold
-                            ), 
+                        style: Theme.of(context).textTheme.titleMedium!
+                            .copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                       Text(
                         widget.number,
-                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                           color: Theme.of(context).brightness == Brightness.light
-                          ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context).colorScheme.onSurface,
-                              fontWeight: FontWeight.bold
-                            ), 
+                        style: Theme.of(context).textTheme.titleMedium!
+                            .copyWith(
+                              color:
+                                  Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Theme.of(context).colorScheme.onSurface,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ],
                   ),
                   Icon(
-                  widget.icon,
-                 color: Theme.of(context).brightness == Brightness.light
-                 ? Theme.of(context).colorScheme.primary
-                 : Theme.of(context).colorScheme.onSurface,
-                   size: 40),
+                    widget.icon,
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.onSurface,
+                    size: 40.sp,
+                  ),
                 ],
               ),
             ),
           ),
         ),
-        
+
         if (_showCallConfirm)
           Padding(
-            padding: const EdgeInsets.only(top: 8),      
+            padding: EdgeInsets.only(top: 8.h),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               decoration: BoxDecoration(
-                color: AppTheme.primaryColor.withOpacity(0.15), 
-                borderRadius: BorderRadius.circular(10),
+                color: AppTheme.primaryColor.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(10.r),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: Text(
-                      'هل تريد الاتصال الآن بـ ${widget.number}؟',
+                      '${S.of(context).doYouWantToCall} ${widget.number}  ',
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        color: Theme.of(context).colorScheme.onSurface,
+                        fontWeight: FontWeight.bold,
+                      ),
                       textAlign: TextAlign.right,
                     ),
                   ),
-                  
+                  SizedBox(width: 8.w),
                   InkWell(
-                    onTap: _callNumber, 
-                    borderRadius: BorderRadius.circular(8),
+                    onTap: _callNumber,
+                    borderRadius: BorderRadius.circular(8.r),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: AppTheme.primaryColor, 
-                        borderRadius: BorderRadius.circular(8),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12.w,
+                        vertical: 6.h,
                       ),
-                      child: const Row(
+                      decoration: BoxDecoration(
+                        color: AppTheme.primaryColor,
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: Row(
                         children: [
-                          Icon(Icons.phone, color: AppTheme.white, size: 18),
-                          SizedBox(width: 4),
+                          Icon(Icons.phone, color: AppTheme.white, size: 18.sp),
+                          SizedBox(width: 4.w),
                           Text(
-                            'اتصل الآن',
-                            style: TextStyle(color: AppTheme.white, fontWeight: FontWeight.bold, fontSize: 14),
+                            S.of(context).callNow,
+                            style: TextStyle(
+                              color: AppTheme.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.sp,
+                            ),
                           ),
                         ],
                       ),

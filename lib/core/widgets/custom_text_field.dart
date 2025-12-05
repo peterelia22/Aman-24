@@ -28,7 +28,6 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // الحصول على مخطط الألوان ونصوص الثيم
-    final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     return Column(
@@ -49,12 +48,14 @@ class CustomTextField extends StatelessWidget {
                   ),
                   // ⭐ استخدام ألوان الثيم للخلفية والحدود
                   decoration: BoxDecoration(
-                    // surfaceVariant يستخدم كلون قريب من الخلفية مع شفافية
-                    color: colorScheme.surfaceVariant.withOpacity(0.3),
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey.shade800
+                        : Colors.white,
                     borderRadius: BorderRadius.circular(16.r),
                     border: Border.all(
-                      // outline يستخدم كلون للحدود
-                      color: colorScheme.outline.withOpacity(0.2),
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.grey.shade700
+                          : Colors.grey.shade300,
                     ),
                   ),
                 ),
@@ -74,15 +75,18 @@ class CustomTextField extends StatelessWidget {
                 maxLines: maxLines,
                 // ⭐ نص الإدخال يستخدم bodyMedium من الثيم
                 style: textTheme.bodyMedium?.copyWith(
-                  // onSurface هو لون النص الأساسي في الثيم (أسود أو أبيض)
-                  color: colorScheme.onSurface,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white
+                      : Colors.black,
                 ),
                 decoration: InputDecoration(
                   suffixIcon: suffixIcon,
                   hintText: hintText,
                   // ⭐ hintStyle يستخدم bodyMedium من الثيم مع شفافية
                   hintStyle: textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.onSurface.withOpacity(0.6),
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey.shade400
+                        : Colors.grey.shade600,
                   ),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(

@@ -6,8 +6,11 @@ import 'package:depi_project/features/reports/presentation/manager/cubit/reports
 import 'package:depi_project/features/reports/presentation/widgets/report_detail_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/helpers/build_app_bar.dart';
+import '../../../../core/helpers/error_message_helper.dart';
+import '../../../../generated/l10n.dart';
 
 class RepportsBody extends StatefulWidget {
   const RepportsBody({super.key});
@@ -22,7 +25,7 @@ class _RepportsBodyState extends State<RepportsBody> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: buildAppBar(context, title: 'بلاغاتي'),
+      appBar: buildAppBar(context, title: S.of(context).myReports),
       body: BlocProvider(
         create: (_) => GetUserReportsCubit()..listenToUserReports(),
         child: BlocBuilder<GetUserReportsCubit, GetUserReportsState>(
@@ -32,18 +35,21 @@ class _RepportsBodyState extends State<RepportsBody> {
             } else if (state is GetUserReportsError) {
               log(state.message);
               return Center(
-                child: Text(
-                  'حدث خطأ أثناء تحميل البلاغات:\n${state.message}',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 16, color: Colors.red),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
+                  child: Text(
+                    getErrorMessage(context, state.message),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16.sp, color: Colors.red),
+                  ),
                 ),
               );
             } else if (state is GetUserReportsSuccess) {
               if (state.reports.isEmpty) {
-                return const Center(
+                return Center(
                   child: Text(
-                    'لا توجد بلاغات لهذا المستخدم.',
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                    S.of(context).noReports,
+                    style: TextStyle(fontSize: 16.sp, color: Colors.grey),
                   ),
                 );
               }

@@ -22,12 +22,6 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "HelpLine": MessageLookupByLibrary.simpleMessage("HelpLine"),
-    "LastName": MessageLookupByLibrary.simpleMessage("Last Name"),
-    "LastNameEx": MessageLookupByLibrary.simpleMessage("Stark"),
-    "SendingEmailForNewPassword": MessageLookupByLibrary.simpleMessage(
-      "Enter your email address or national ID number and we will send you a link to reset your password.",
-    ),
     "accountCreationFailed": MessageLookupByLibrary.simpleMessage(
       "Account creation failed. Please try again.",
     ),
@@ -69,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cyberFraudWarningContinue4": MessageLookupByLibrary.simpleMessage(
       "to protect yourself",
     ),
+    "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
     "dataLookupError": MessageLookupByLibrary.simpleMessage(
       "An error occurred while looking up data",
     ),
@@ -79,7 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "description": MessageLookupByLibrary.simpleMessage("Description"),
     "doYouWantToCall": MessageLookupByLibrary.simpleMessage(
-      "Do you want to call",
+      "Do you want to call ",
     ),
     "do_notHaveAccount": MessageLookupByLibrary.simpleMessage(
       "Don\'t have an account?",
@@ -91,7 +86,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "emailAlreadyInUse": MessageLookupByLibrary.simpleMessage(
       "This email address is already in use.",
     ),
-    "emailOrId": MessageLookupByLibrary.simpleMessage("Email or ID"),
+    "emailOrId": MessageLookupByLibrary.simpleMessage("Email or National ID"),
     "emergencyNumbers": MessageLookupByLibrary.simpleMessage(
       "Emergency Numbers",
     ),
@@ -157,6 +152,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "havingAccount": MessageLookupByLibrary.simpleMessage(
       "Do you have an account?",
     ),
+    "helpLine": MessageLookupByLibrary.simpleMessage("HelpLine"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
     "hour": MessageLookupByLibrary.simpleMessage("hour"),
     "hours": MessageLookupByLibrary.simpleMessage("hours"),
@@ -170,6 +166,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Invalid notification ID",
     ),
     "language": MessageLookupByLibrary.simpleMessage("Language"),
+    "lastName": MessageLookupByLibrary.simpleMessage("Last Name"),
+    "lastNameEx": MessageLookupByLibrary.simpleMessage("Stark"),
+    "lightMode": MessageLookupByLibrary.simpleMessage("Light Mode"),
+    "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
     "location": MessageLookupByLibrary.simpleMessage("Location (Optional)"),
     "locationEx": MessageLookupByLibrary.simpleMessage(
       "Example: Downtown, Cairo",
@@ -273,6 +273,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "resetPassword": MessageLookupByLibrary.simpleMessage("Reset Password"),
     "securityTips": MessageLookupByLibrary.simpleMessage("Security Tips"),
+    "sendingEmailForNewPassword": MessageLookupByLibrary.simpleMessage(
+      "Enter your email address or national ID number and we will send you a link to reset your password.",
+    ),
     "sendingLinkReset": MessageLookupByLibrary.simpleMessage(
       "Sending Reset Link",
     ),
@@ -299,6 +302,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "statusRejected": MessageLookupByLibrary.simpleMessage("Rejected"),
     "statusResolved": MessageLookupByLibrary.simpleMessage("Resolved"),
     "submitReport": MessageLookupByLibrary.simpleMessage("Submit Report"),
+    "themeMode": MessageLookupByLibrary.simpleMessage("Theme"),
     "tip1": MessageLookupByLibrary.simpleMessage(
       "Enable two-factor authentication (2FA) to protect your accounts from hacking.",
     ),

@@ -8,6 +8,7 @@ import 'package:depi_project/features/notifications/domain/repos/notifications_r
 import 'package:depi_project/core/cubits/get_notifications_cubit/get_notifications_cubit.dart';
 import 'package:depi_project/features/notifications/presentation/views/notifications_view.dart';
 import 'package:depi_project/features/reports/presentation/views/repports_body.dart';
+import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -65,18 +66,8 @@ class _MainScreenState extends State<MainScreen> {
         ), // خلفية غامقة أنيقة
         body: IndexedStack(index: currentIndex, children: screens),
 
-        // 🔸 الزر العائم في المنتصف (أحمر متوهج)
         floatingActionButton: Container(
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Color(0xFFFF6B5E), // توهج أحمر
-                blurRadius: 10,
-                spreadRadius: 1,
-              ),
-            ],
-          ),
+          decoration: const BoxDecoration(shape: BoxShape.circle),
           child: FloatingActionButton(
             backgroundColor: const Color(0xFFFF6B5E),
             elevation: 6,
@@ -111,24 +102,26 @@ class _MainScreenState extends State<MainScreen> {
                 currentIndex: currentIndex,
                 selectedItemColor: const Color(0xFFFF6B5E),
                 unselectedItemColor: Theme.of(context).unselectedWidgetColor,
+                selectedFontSize: 11,
+                unselectedFontSize: 10,
                 iconSize: 24,
                 onTap: (index) => setState(() => currentIndex = index),
                 items: [
-                  const BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
-                    label: "الرئيسية",
+                  BottomNavigationBarItem(
+                    icon: const Icon(Icons.home),
+                    label: S.of(context).home,
                   ),
-                  const BottomNavigationBarItem(
-                    icon: Icon(Icons.receipt_long),
-                    label: "بلاغاتي",
+                  BottomNavigationBarItem(
+                    icon: const Icon(Icons.receipt_long),
+                    label: S.of(context).myReports,
                   ),
                   BottomNavigationBarItem(
                     icon: NotificationBadgeIcon(count: unreadCount),
-                    label: "الاشعارات",
+                    label: S.of(context).notifications,
                   ),
-                  const BottomNavigationBarItem(
-                    icon: Icon(Icons.person),
-                    label: "الملف الشخصي",
+                  BottomNavigationBarItem(
+                    icon: const Icon(Icons.person),
+                    label: S.of(context).profile,
                   ),
                 ],
               );

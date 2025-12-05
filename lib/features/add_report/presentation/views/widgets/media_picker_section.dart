@@ -80,13 +80,14 @@ class MediaPickerSection extends StatelessWidget {
             height: 150,
             decoration: BoxDecoration(
               color: Theme.of(context).brightness == Brightness.dark
-              ? Colors.grey.shade800
-             : Colors.grey.shade100,
-              border: Border.all(color: Theme.of(context).brightness == Brightness.dark
-              ? const Color.fromARGB(255, 110, 110, 110)
-             : const Color.fromARGB(255, 215, 210, 210),),
+                  ? Colors.grey.shade800
+                  : Colors.white,
+              border: Border.all(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.grey.shade700
+                    : Colors.grey.shade300,
+              ),
               borderRadius: BorderRadius.circular(12),
-              
             ),
             child: Center(
               child: Column(
@@ -95,12 +96,12 @@ class MediaPickerSection extends StatelessWidget {
                   Icon(
                     Icons.add_photo_alternate_outlined,
                     size: 48,
-                    color: Colors.grey[400],
+                    color: Colors.grey.shade400,
                   ),
                   const SizedBox(height: 8),
                   Text(
                     S.of(context).addPhotosAndVideos,
-                    style: TextStyle(color: Colors.grey[600]),
+                    style: TextStyle(color: Colors.grey.shade600),
                   ),
                 ],
               ),

@@ -1,135 +1,165 @@
-import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../core/cubits/get_notifications_cubit/get_notifications_cubit.dart';
 import '../../../../../core/helpers/format_date_time.dart';
 import '../../../../../core/helpers/report_status_helper.dart';
-import '../../../../reports/presentation/views/report_details_screen.dart';
+import '../../../../../core/widgets/status_chip.dart';
 import '../../../domain/entities/report_notification_entity.dart';
 
 class NotificationCard extends StatelessWidget {
-  const NotificationCard({super.key, required this.notification});
+  const NotificationCard({
+    super.key,
+    required this.notification,
+    required this.isProcessing,
+    required this.onTap,
+  });
 
   final ReportNotificationEntity notification;
+  final bool isProcessing;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final formattedDate = formatDateTime(notification.timestamp.toLocal());
+    final formattedDate = formatDateTime(
+      notification.timestamp.toLocal(),
+      context,
+    );
     final statusColor = getStatusColor(notification.status);
     final statusLabel = getStatusText(context, notification.status);
 
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        onTap: () => handleTap(context),
+        borderRadius: BorderRadius.circular(16.r),
+        onTap: isProcessing ? null : onTap,
         child: Container(
+          margin: EdgeInsets.only(bottom: 8.h),
           decoration: BoxDecoration(
             color: Theme.of(context).brightness == Brightness.dark
-                ? notification.isRead
-                      ? const Color.fromARGB(255, 38, 41, 43)
-                      : const Color.fromARGB(255, 230, 103, 96)
-                : notification.isRead
-                ? AppTheme.lightGrey
-                : AppTheme.lightRed,
-            // color: notification.isRead ? AppTheme.lightGrey : AppTheme.lightRed,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppTheme.primaryColor.withOpacity(0.1)),
-          ),
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      notification.title,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
-                      textAlign: TextAlign.right,
-                    ),
-                  ),
-                  if (!notification.isRead) const SizedBox(width: 8),
-                  if (!notification.isRead)
-                    const CircleAvatar(
-                      radius: 5,
-                      backgroundColor: AppTheme.primaryColor,
-                    ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Text(
-                notification.message,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-                textAlign: TextAlign.right,
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Chip(
-                    label: Text(statusLabel),
-                    backgroundColor: statusColor.withOpacity(0.15),
-                    labelStyle: TextStyle(
-                      color: statusColor,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                  ),
-                  const Spacer(),
-                  Text(
-                    formattedDate,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                    textAlign: TextAlign.right,
-                  ),
-                ],
+                ? const Color.fromARGB(255, 38, 41, 43)
+                : Colors.white,
+            borderRadius: BorderRadius.circular(16.r),
+            border: Border.all(
+              color: notification.isRead
+                  ? Colors.grey.withOpacity(0.2)
+                  : statusColor.withOpacity(0.3),
+              width: notification.isRead ? 1 : 2,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color:
+                    (Theme.of(context).brightness == Brightness.dark
+                            ? Colors.black
+                            : Colors.grey)
+                        .withOpacity(0.1),
+                blurRadius: 8,
+                offset: Offset(0, 2),
               ),
             ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16.r),
+            child: Row(
+              children: [
+                // Left colored stripe
+                Container(
+                  width: 4.w,
+                  height: 100.h,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [statusColor, statusColor.withOpacity(0.5)],
+                    ),
+                  ),
+                ),
+                // Content
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(16.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.notifications_active_rounded,
+                              size: 20.sp,
+                              color: statusColor,
+                            ),
+                            SizedBox(width: 8.w),
+                            Expanded(
+                              child: Text(
+                                notification.getLocalizedTitle(context),
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            if (!notification.isRead)
+                              Container(
+                                width: 10.w,
+                                height: 10.h,
+                                decoration: BoxDecoration(
+                                  color: statusColor,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                          ],
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          notification.getLocalizedMessage(context),
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withOpacity(0.7),
+                            height: 1.4,
+                          ),
+                          textAlign: TextAlign.start,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(height: 12.h),
+                        Row(
+                          children: [
+                            StatusChip(
+                              label: statusLabel,
+                              statusColor: statusColor,
+                            ),
+                            Spacer(),
+                            Icon(
+                              Icons.access_time_rounded,
+                              size: 14.sp,
+                              color: Colors.grey.shade500,
+                            ),
+                            SizedBox(width: 4.w),
+                            Text(
+                              formattedDate,
+                              style: TextStyle(
+                                fontSize: 11.sp,
+                                color: Colors.grey.shade500,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
-  }
-
-  Future<void> handleTap(BuildContext context) async {
-    final cubit = context.read<GetNotificationsCubit>();
-
-    final result = await cubit.handleNotificationTap(notification);
-    if (!context.mounted) return;
-
-    switch (result.action) {
-      case NotificationTapAction.markedAsRead:
-        break;
-
-      case NotificationTapAction.openReport:
-        if (result.report != null) {
-          await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => ReportDetailsScreen(report: result.report!),
-            ),
-          );
-        }
-        break;
-
-      case NotificationTapAction.error:
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(result.errorMessage ?? 'حدث خطأ غير متوقع'),
-            backgroundColor: Colors.red,
-          ),
-        );
-        break;
-    }
   }
 }

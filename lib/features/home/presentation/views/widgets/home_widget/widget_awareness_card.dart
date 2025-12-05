@@ -22,9 +22,9 @@ class WidgetAwarenessCard extends StatelessWidget {
     return Card(
       elevation: 0.5,
       shadowColor: AppTheme.black,
-      color: Theme.of(context).brightness == Brightness.dark 
-    ? const Color.fromARGB(255, 38, 41, 43)
-    : AppTheme.white,
+      color: Theme.of(context).brightness == Brightness.dark
+          ? const Color.fromARGB(255, 38, 41, 43)
+          : AppTheme.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Padding(
         padding: const EdgeInsets.only(
@@ -36,33 +36,45 @@ class WidgetAwarenessCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  text1,
-                  style: TextStyle(color: AppTheme.primaryColor, fontSize: 14),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  text2,
-                  style: TextStyle(
-                   color: Theme.of(context).colorScheme.onSurface,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    text1,
+                    style: TextStyle(
+                      color: AppTheme.primaryColor,
+                      fontSize: 14,
+                    ),
                   ),
-                ),
-                SizedBox(height: 16),
-                Text(
-                  text3,
-                  style: TextStyle( color: Theme.of(context).colorScheme.onSurface, fontSize: 14),
-                ),
-                Text(
-                  text4,
-                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 14),
-                ),
-              ],
+                  SizedBox(height: 8),
+                  Text(
+                    text2,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    text3,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 14,
+                    ),
+                  ),
+                  Text(
+                    text4,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
             ),
+            SizedBox(width: 12),
             Container(
               height: 100,
               width: 100,

@@ -2,8 +2,10 @@ import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:depi_project/core/widgets/custom_button.dart';
 import 'package:depi_project/core/widgets/custom_password_field.dart';
 import 'package:depi_project/features/auth/presentation/views/signup_view.dart';
+import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/widgets/custom_text_field.dart';
 import '../../manager/cubits/signin_cubit/signin_cubit.dart';
@@ -20,38 +22,44 @@ class SigninViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
         child: Form(
           key: formKey,
           autovalidateMode: autovalidateMode,
           child: Column(
             children: [
-              SizedBox(height: 290),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+              Image.asset(
+                'assets/images/logo.png',
+                height: 120.h,
+                width: 120.w,
+              ),
+              SizedBox(height: 40.h),
               CustomTextField(
                 onSaved: (value) {
                   emailOrNationalId = value!;
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'برجاء إدخال البريد الإلكتروني أو الرقم القومي';
+                    return S.of(context).enterEmailOrId;
                   } else if (!value.contains('@') &&
                       !RegExp(r'^\d+$').hasMatch(value)) {
-                    return 'برجاء إدخال بريد إلكتروني صالح أو رقم قومي صحيح';
+                    return S.of(context).validEmailOrId;
                   }
                   return null;
                 },
-                labelText: ' البريد الالكتروني او الرقم القومي',
+                labelText: S.of(context).emailOrId,
                 hintText: 'example@mail.com',
                 obscureText: false,
                 keyboardType: TextInputType.text,
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 16.h),
               CustomPasswordField(
                 onSaved: (value) {
                   password = value!;
                 },
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 24.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -59,8 +67,8 @@ class SigninViewBody extends StatelessWidget {
                     onTap: () {
                       Navigator.pushNamed(context, ResetPasswordView.routeName);
                     },
-                    child: const Text(
-                      'نسيت كلمة المرور؟',
+                    child: Text(
+                      S.of(context).forgetPassword,
                       style: TextStyle(
                         color: AppTheme.primaryColor,
                         fontWeight: FontWeight.w600,
@@ -70,7 +78,7 @@ class SigninViewBody extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 24.h),
               CustomButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
@@ -83,41 +91,35 @@ class SigninViewBody extends StatelessWidget {
                     autovalidateMode = AutovalidateMode.always;
                   }
                 },
-                text: 'تسجيل الدخول',
-                gradientColors: AppTheme.primaryGradientColors,
-                shadowColor: AppTheme.primaryShadowColor,
+                text: S.of(context).signIn,
               ),
-              SizedBox(height: 180),
+              SizedBox(height: 40.h),
               GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(context, SignupView.routeName);
                 },
                 child: Column(
                   children: [
-                    Text('ليس لديك حساب؟'),
-                    SizedBox(height: 15),
+                    Text(S.of(context).do_notHaveAccount),
+                    SizedBox(height: 12.h),
                     CustomButton(
-                      text: 'انشاء حساب',
-                      gradientColors: [
-                        const Color.fromARGB(130, 228, 222, 222),
-                        const Color.fromARGB(130, 239, 191, 191),
-                        const Color.fromARGB(130, 228, 222, 222),
-                      ],
-                      shadowColor: const Color.fromARGB(
-                        255,
-                        231,
-                        124,
-                        124,
-                      ).withOpacity(0.5),
-
+                      text: S.of(context).creatingAccount,
+                      backgroundColor:
+                          Theme.of(context).brightness == Brightness.dark
+                          ? Colors.grey.shade800
+                          : Colors.grey.shade100,
+                      borderColor:
+                          Theme.of(context).brightness == Brightness.dark
+                          ? Colors.grey.shade700
+                          : Colors.grey.shade300,
                       borderWidth: 1.5,
                       hasShadow: false,
-                     textColor: const Color.fromARGB(255, 50, 50, 50),
+                      textColor: Colors.white,
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 40.h),
             ],
           ),
         ),

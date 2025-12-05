@@ -1,3 +1,4 @@
+import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -50,21 +51,10 @@ class CustomButton extends StatelessWidget {
                 end: Alignment.centerRight,
               )
             : null,
-        color: backgroundColor,
+        color: AppTheme.primaryColor,
         borderRadius: BorderRadius.circular(effectiveBorderRadius),
         border: borderColor != null && borderWidth != null
             ? Border.all(color: borderColor!, width: borderWidth!)
-            : null,
-        boxShadow: hasShadow
-            ? [
-                BoxShadow(
-                  color: (shadowColor ?? backgroundColor ?? Colors.grey)
-                      .withOpacity(0.2),
-                  blurRadius: 12,
-                  offset: const Offset(0, 6),
-                  spreadRadius: 2,
-                ),
-              ]
             : null,
       ),
       child: TextButton(

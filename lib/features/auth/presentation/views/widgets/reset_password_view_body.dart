@@ -1,6 +1,7 @@
 import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:depi_project/core/widgets/custom_button.dart';
 import 'package:depi_project/core/widgets/custom_text_field.dart';
+import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +26,6 @@ class _ResetPasswordViewBodyState extends State<ResetPasswordViewBody> {
     // جلب اللون الأساسي (primaryColor) بشكل ديناميكي
     final primaryColor = Theme.of(context).primaryColor;
 
-
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -37,7 +37,7 @@ class _ResetPasswordViewBodyState extends State<ResetPasswordViewBody> {
             children: [
               const SizedBox(height: 120),
               Text(
-                'إعادة تعيين كلمة المرور',
+                S.of(context).resetPassword,
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -46,7 +46,7 @@ class _ResetPasswordViewBodyState extends State<ResetPasswordViewBody> {
               ),
               const SizedBox(height: 12),
               Text(
-                'أدخل بريدك الإلكتروني أو الرقم القومي وسنرسل لك رابط لإعادة تعيين كلمة المرور',
+                S.of(context).sendingEmailForNewPassword,
                 style: TextStyle(
                   fontSize: 16,
                   color: textTheme.titleMedium!.color,
@@ -60,14 +60,14 @@ class _ResetPasswordViewBodyState extends State<ResetPasswordViewBody> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'برجاء إدخال البريد الإلكتروني أو الرقم القومي';
+                    return S.of(context).enterEmailOrId;
                   } else if (!value.contains('@') &&
                       !RegExp(r'^\d+$').hasMatch(value)) {
-                    return 'برجاء إدخال بريد إلكتروني صالح أو رقم قومي صحيح';
+                    return S.of(context).validEmailOrId;
                   }
                   return null;
                 },
-                labelText: 'البريد الإلكتروني أو الرقم القومي',
+                labelText: S.of(context).emailOrId,
                 hintText: 'example@mail.com ',
                 obscureText: false,
                 keyboardType: TextInputType.text,
@@ -78,15 +78,13 @@ class _ResetPasswordViewBodyState extends State<ResetPasswordViewBody> {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
                     context.read<ResetPasswordCubit>().resetPassword(
-                          emailOrNationalId,
-                        );
+                      emailOrNationalId,
+                    );
                   } else {
                     autovalidateMode = AutovalidateMode.always;
                   }
                 },
-                text: 'إرسال رابط إعادة التعيين',
-                gradientColors: AppTheme.primaryGradientColors, 
-                shadowColor: AppTheme.primaryShadowColor,
+                text: S.of(context).sendingLinkReset,
               ),
               const SizedBox(height: 20),
               Center(
@@ -95,7 +93,7 @@ class _ResetPasswordViewBodyState extends State<ResetPasswordViewBody> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    'العودة لتسجيل الدخول',
+                    S.of(context).backSignIn,
                     style: TextStyle(
                       // 🛠️ التعديل الثالث: استخدام اللون الأساسي الديناميكي
                       color: primaryColor,

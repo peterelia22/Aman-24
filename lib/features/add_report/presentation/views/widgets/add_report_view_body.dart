@@ -1,7 +1,9 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:depi_project/core/theme/app_theme.dart';
+import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../../core/entities/report_entity.dart';
@@ -36,14 +38,14 @@ class _AddReportViewBodyState extends State<AddReportViewBody> {
       color: Theme.of(context).scaffoldBackgroundColor,
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Form(
             key: formKey,
             autovalidateMode: autovalidateMode,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 // Title field
                 CustomTextField(
                   onSaved: (value) {
@@ -51,19 +53,19 @@ class _AddReportViewBodyState extends State<AddReportViewBody> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'برجاء إدخال عنوان البلاغ';
+                      return S.of(context).enterReportTitle;
                     } else if (value.length < 5) {
-                      return 'عنوان البلاغ يجب أن يكون 5 أحرف على الأقل';
+                      return S.of(context).reportTitleAtLeast5;
                     }
                     return null;
                   },
-                  labelText: 'عنوان البلاغ',
-                  hintText: 'مثال: سرقة محل تجاري',
+                  labelText: S.of(context).reportTitle,
+                  hintText: S.of(context).reportEx,
                   obscureText: false,
                   keyboardType: TextInputType.text,
                 ),
-                const SizedBox(height: 16),
-      
+                SizedBox(height: 16.h),
+
                 // Description field
                 CustomTextField(
                   onSaved: (value) {
@@ -71,40 +73,40 @@ class _AddReportViewBodyState extends State<AddReportViewBody> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'برجاء إدخال وصف البلاغ';
+                      return S.of(context).enterReportDescription;
                     } else if (value.length < 10) {
-                      return 'وصف البلاغ يجب أن يكون 10 أحرف على الأقل';
+                      return S.of(context).reportDescriptionAtLeast10;
                     }
                     return null;
                   },
-                  labelText: 'وصف البلاغ',
-                  hintText: 'اكتب تفاصيل البلاغ بالكامل...',
+                  labelText: S.of(context).reportDescription,
+                  hintText: S.of(context).writeReportDescription,
                   obscureText: false,
                   keyboardType: TextInputType.multiline,
                   maxLines: 5,
                 ),
-                const SizedBox(height: 16),
-      
+                SizedBox(height: 16.h),
+
                 // Location field (optional)
                 CustomTextField(
                   onSaved: (value) {
                     address = value?.isEmpty == true ? null : value;
                   },
                   validator: (value) => null,
-                  labelText: 'الموقع (اختياري)',
-                  hintText: 'مثال: شارع الجمهورية، القاهرة',
+                  labelText: S.of(context).location,
+                  hintText: S.of(context).locationEx,
                   obscureText: false,
                   keyboardType: TextInputType.text,
                 ),
-                const SizedBox(height: 24),
-      
+                SizedBox(height: 24.h),
+
                 // Media Section
                 MediaPickerSection(
                   mediaManager: mediaManager,
                   onMediaChanged: () => setState(() {}),
                 ),
-                const SizedBox(height: 16),
-      
+                SizedBox(height: 24.h),
+
                 CustomButton(
                   onPressed: () {
                     if (mediaManager.isNotEmpty) {
@@ -133,17 +135,16 @@ class _AddReportViewBodyState extends State<AddReportViewBody> {
                     } else {
                       buildSnackBar(
                         context: context,
-                        title: 'تنبيه',
-                        message: 'يجب إضافة صورة أو فيديو واحد على الأقل',
+                        title: S.of(context).alert,
+                        message: S.of(context).mustAddMedia,
                         contentType: ContentType.warning,
                       );
                     }
                   },
-                  text: 'إرسال البلاغ',
-                  gradientColors: AppTheme.primaryGradientColors,
-                  shadowColor: AppTheme.primaryShadowColor,
+                  text: S.of(context).sendingReport,
+                  backgroundColor: AppTheme.primaryColor,
                 ),
-                const SizedBox(height: 40),
+                SizedBox(height: 40.h),
               ],
             ),
           ),

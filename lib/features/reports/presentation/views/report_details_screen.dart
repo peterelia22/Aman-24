@@ -2,7 +2,10 @@ import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:depi_project/core/entities/report_entity.dart';
 import 'package:depi_project/core/enums/report_status_enums.dart';
 import 'package:depi_project/core/helpers/build_app_bar.dart';
+import 'package:depi_project/core/widgets/status_chip.dart';
+import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:depi_project/features/reports/presentation/widgets/media_thumbnail.dart';
 
@@ -29,68 +32,68 @@ class ReportDetailsScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: buildAppBar(context, title: 'تفاصيل البلاغ'),
+      appBar: buildAppBar(context, title: S.of(context).reportDetails),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               report.title,
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 24.sp,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
 
             Row(
               children: [
-                const Text(
-                  'الحالة:',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(width: 8),
-                Chip(
-                  label: Text(
-                    report.getStatusDisplayName(context),
-                    style: TextStyle(
-                      color: AppTheme.white,
-                      fontWeight: FontWeight.w600,
-                    ),
+                Text(
+                  S.of(context).status,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
                   ),
-                  backgroundColor: getReportStatusColor(report.status),
+                ),
+                SizedBox(width: 8.w),
+                StatusChip(
+                  label: report.getStatusDisplayName(context),
+                  statusColor: getReportStatusColor(report.status),
                 ),
               ],
             ),
             const Divider(height: 32),
 
-            const Text(
-              'الوصف:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            Text(
+              S.of(context).description,
+              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
-            Text(report.description, style: const TextStyle(fontSize: 16)),
+            SizedBox(height: 8.h),
+            Text(report.description, style: TextStyle(fontSize: 16.sp)),
             const Divider(height: 32),
 
             if (report.address != null && report.address!.isNotEmpty)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'الموقع:',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  Text(
+                    S.of(context).address,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Row(
                     children: [
                       const Icon(Icons.location_on, color: AppTheme.darkGrey),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8.w),
                       Expanded(
                         child: Text(
                           report.address!,
-                          style: const TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: 16.sp),
                         ),
                       ),
                     ],
@@ -104,11 +107,14 @@ class ReportDetailsScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'الصور/الفيديو:',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  Text(
+                    S.of(context).media,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   SizedBox(
                     height: 100,
                     child: ListView.builder(
@@ -124,7 +130,7 @@ class ReportDetailsScreen extends StatelessWidget {
                             ? report.mediaUrls.length - 4
                             : 0;
                         return Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
+                          padding: EdgeInsets.only(right: 8.0.w),
                           child: MediaThumbnail(
                             mediaUrl: url,
                             showMoreIndicator: showMore,
@@ -141,32 +147,32 @@ class ReportDetailsScreen extends StatelessWidget {
             // (Admin Comment)
             if (report.adminComment != null && report.adminComment!.isNotEmpty)
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: EdgeInsets.all(12.w),
                 decoration: BoxDecoration(
                   color: Theme.of(context).brightness == Brightness.dark
                       ? const Color.fromARGB(255, 38, 41, 43)
-                      : AppTheme.lightGrey,
-                  borderRadius: BorderRadius.circular(8),
+                      : Colors.white,
+                  borderRadius: BorderRadius.circular(8.r),
                   border: Border.all(color: AppTheme.darkGrey.withOpacity(0.5)),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Text(
-                      'تعليق المسؤول:',
+                    Text(
+                      S.of(context).adminComment,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
                         color: AppTheme.primaryColor,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8.w),
                     Expanded(
                       child: Text(
                         report.adminComment!,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSurface,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                         ),
                       ),
                     ),

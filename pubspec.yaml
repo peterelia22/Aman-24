@@ -46,9 +46,11 @@ flutter:
   generate: true
   uses-material-design: true
   assets:
-     - assets/images/
+     - assets/images/logo.png
+     - assets/images/computer2.jpg
+     - assets/images/police.jpg
+     - assets/images/security.jpg
      - .env
-  #   - images/a_dot_ham.jpeg
   fonts:
     - family: Cairo
       fonts:

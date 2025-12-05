@@ -3,8 +3,8 @@ import 'package:depi_project/core/entities/report_entity.dart';
 abstract class GetUserReportsState {
   const GetUserReportsState();
   List<Object?> get props => [];
-
 }
+
 class GetUserReportsInitial extends GetUserReportsState {}
 
 class GetUserReportsLoading extends GetUserReportsState {}

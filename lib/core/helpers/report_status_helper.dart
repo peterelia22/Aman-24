@@ -6,15 +6,15 @@ import '../../generated/l10n.dart';
 Color getStatusColor(ReportStatusEnum status) {
   switch (status) {
     case ReportStatusEnum.pending:
-      return Colors.orange;
+      return Colors.blueGrey.shade500;
     case ReportStatusEnum.inReview:
-      return Colors.blue;
+      return Colors.amber.shade700;
     case ReportStatusEnum.investigating:
-      return Colors.purple;
+      return Colors.orange.shade700;
     case ReportStatusEnum.resolved:
-      return Colors.green;
+      return Colors.green.shade600;
     case ReportStatusEnum.rejected:
-      return Colors.red;
+      return Colors.red.shade600;
   }
 }
 
