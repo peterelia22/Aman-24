@@ -33,7 +33,6 @@ void main() async {
   );
 }
 
-// add Github link to the project
 class DEPI extends StatelessWidget {
   const DEPI({super.key});
 
