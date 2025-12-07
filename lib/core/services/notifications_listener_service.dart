@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:depi_project/contants.dart';
 import 'package:depi_project/core/helpers/get_user.dart';
 import 'package:depi_project/core/utils/shared_preferences_singleton.dart';
 
@@ -20,6 +21,12 @@ class NotificationsListenerService {
 
   /// Start listening for new documents for current user.
   Future<void> start() async {
+    final userJson = SharedPreferencesSingleton.getString(kUserData);
+    if (userJson.isEmpty) {
+      // Skip starting the listener until a user logs in and persists data.
+      return;
+    }
+
     final uid = getUser().uId;
 
     await stop();

@@ -8,6 +8,7 @@ import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/services/database_service.dart';
 import '../../../../core/services/firebase_auth_service.dart';
+import '../../../../core/services/notifications_listener_service.dart';
 import '../../../../core/utils/backend_endpoint.dart';
 import '../../../../core/utils/shared_preferences_singleton.dart';
 import '../../domain/entities/user_entity.dart';
@@ -114,6 +115,8 @@ class AuthRepoImplementation extends AuthRepo {
     final jsonData = jsonEncode(UserModel.fromEntity(user).toMap());
     await SharedPreferencesSingleton.setString(kUserData, jsonData);
     SharedPreferencesSingleton.setBool(isLoggedIn, true);
+    // Start notifications listener after user data is available on device
+    await NotificationsListenerService.instance.start();
   }
 
   Future<String> getEmailByNationalId(String nationalId) async {
