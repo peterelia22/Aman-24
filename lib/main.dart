@@ -14,6 +14,10 @@ import 'core/utils/shared_preferences_singleton.dart';
 import 'generated/l10n.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'core/services/local_notification_service.dart';
+import 'core/services/notifications_listener_service.dart';
+import 'core/services/navigation_service.dart';
+import 'core/services/notification_navigation_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +25,12 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await SharedPreferencesSingleton.init();
   setupGetit();
+
+  // Initialize local notifications and start Firestore listener
+  await LocalNotificationService.instance.init(
+    onNotificationTap: NotificationNavigationService.handlePayload,
+  );
+  await NotificationsListenerService.instance.start();
 
   runApp(
     MultiProvider(
@@ -53,6 +63,7 @@ class DEPI extends StatelessWidget {
             return Consumer<ThemeNotifier>(
               builder: (context, themeNotifier, child) {
                 return MaterialApp(
+                  navigatorKey: navigatorKey,
                   debugShowCheckedModeBanner: false,
                   theme: AppTheme.lightTheme,
                   darkTheme: AppTheme.darkTheme,
