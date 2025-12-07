@@ -1,6 +1,7 @@
 import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:depi_project/core/entities/report_entity.dart';
-import 'package:depi_project/core/enums/report_status_enums.dart';
+import 'package:depi_project/core/helpers/report_status_helper.dart';
+import 'package:depi_project/core/helpers/theme_helper.dart';
 import 'package:depi_project/core/widgets/status_chip.dart';
 import 'package:depi_project/features/reports/presentation/views/report_details_screen.dart';
 import 'package:depi_project/generated/l10n.dart';
@@ -10,21 +11,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ReportDetailCard extends StatelessWidget {
   final ReportEntity data;
   const ReportDetailCard({super.key, required this.data});
-
-  Color _getReportStatusColor(ReportStatusEnum status) {
-    switch (status) {
-      case ReportStatusEnum.pending:
-        return Colors.blueGrey.shade500;
-      case ReportStatusEnum.inReview:
-        return Colors.amber.shade700;
-      case ReportStatusEnum.investigating:
-        return Colors.orange.shade700;
-      case ReportStatusEnum.resolved:
-        return Colors.green.shade600;
-      case ReportStatusEnum.rejected:
-        return Colors.red.shade600;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +27,7 @@ class ReportDetailCard extends StatelessWidget {
         margin: EdgeInsets.all(8.w),
         elevation: 2,
         shadowColor: AppTheme.black,
-        color: Theme.of(context).brightness == Brightness.dark
-            ? const Color.fromARGB(255, 38, 41, 43)
-            : AppTheme.lightGrey,
+        color: ThemeHelper.getCardColor(context),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.r),
         ),
@@ -70,7 +54,7 @@ class ReportDetailCard extends StatelessWidget {
                   SizedBox(width: 8.w),
                   StatusChip(
                     label: data.getStatusDisplayName(context),
-                    statusColor: _getReportStatusColor(data.status),
+                    statusColor: getStatusColor(data.status),
                   ),
                 ],
               ),

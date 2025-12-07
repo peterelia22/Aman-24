@@ -1,3 +1,4 @@
+import 'package:depi_project/core/helpers/theme_helper.dart';
 import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -22,8 +23,8 @@ class WidgetAwarenessCard extends StatelessWidget {
     return Card(
       elevation: 0.5,
       shadowColor: AppTheme.black,
-      color: Theme.of(context).brightness == Brightness.dark
-          ? const Color.fromARGB(255, 38, 41, 43)
+      color: ThemeHelper.isDarkMode(context)
+          ? AppTheme.darkSurface
           : AppTheme.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Padding(

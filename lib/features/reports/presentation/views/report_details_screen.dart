@@ -1,7 +1,8 @@
 import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:depi_project/core/entities/report_entity.dart';
-import 'package:depi_project/core/enums/report_status_enums.dart';
 import 'package:depi_project/core/helpers/build_app_bar.dart';
+import 'package:depi_project/core/helpers/report_status_helper.dart';
+import 'package:depi_project/core/helpers/theme_helper.dart';
 import 'package:depi_project/core/widgets/status_chip.dart';
 import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -16,21 +17,6 @@ class ReportDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color getReportStatusColor(ReportStatusEnum status) {
-      switch (status) {
-        case ReportStatusEnum.pending:
-          return Colors.blueGrey.shade500;
-        case ReportStatusEnum.inReview:
-          return Colors.amber.shade700;
-        case ReportStatusEnum.investigating:
-          return Colors.orange.shade700;
-        case ReportStatusEnum.resolved:
-          return Colors.green.shade600;
-        case ReportStatusEnum.rejected:
-          return Colors.red.shade600;
-      }
-    }
-
     return Scaffold(
       appBar: buildAppBar(context, title: S.of(context).reportDetails),
       body: SingleChildScrollView(
@@ -60,7 +46,7 @@ class ReportDetailsScreen extends StatelessWidget {
                 SizedBox(width: 8.w),
                 StatusChip(
                   label: report.getStatusDisplayName(context),
-                  statusColor: getReportStatusColor(report.status),
+                  statusColor: getStatusColor(report.status),
                 ),
               ],
             ),
@@ -149,9 +135,7 @@ class ReportDetailsScreen extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(12.w),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? const Color.fromARGB(255, 38, 41, 43)
-                      : Colors.white,
+                  color: ThemeHelper.getSurfaceColor(context),
                   borderRadius: BorderRadius.circular(8.r),
                   border: Border.all(color: AppTheme.darkGrey.withOpacity(0.5)),
                 ),

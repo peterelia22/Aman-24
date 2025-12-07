@@ -1,8 +1,10 @@
-import 'package:depi_project/core/theme/app_theme.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/helpers/build_snack_bar.dart';
 import '../../../../../core/helpers/error_message_helper.dart';
+import '../../../../../generated/l10n.dart';
 import '../../manager/cubits/reset_password_cubit/reset_password_cubit.dart';
 import 'reset_password_view_body.dart';
 
@@ -14,25 +16,22 @@ class ResetPasswordViewBodyBlocConsumer extends StatelessWidget {
     return BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
       listener: (context, state) {
         if (state is ResetPasswordSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
+          buildSnackBar(
+            context: context,
+            title: 'نجح',
+            message:
                 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني',
-              ),
-              backgroundColor: Colors.green,
-              duration: Duration(seconds: 3),
-            ),
+            contentType: ContentType.success,
           );
           Navigator.pop(context);
         }
 
         if (state is ResetPasswordFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(getErrorMessage(context, state.message)),
-              backgroundColor: AppTheme.primaryColor,
-              duration: const Duration(seconds: 3),
-            ),
+          buildSnackBar(
+            context: context,
+            title: S.of(context).error,
+            message: getErrorMessage(context, state.message),
+            contentType: ContentType.failure,
           );
         }
       },

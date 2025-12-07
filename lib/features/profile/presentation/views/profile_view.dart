@@ -1,5 +1,7 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:depi_project/core/theme/app_theme.dart';
 import 'package:depi_project/core/helpers/build_app_bar.dart';
+import 'package:depi_project/core/helpers/build_snack_bar.dart';
 import 'package:depi_project/core/helpers/error_message_helper.dart';
 import 'package:depi_project/core/helpers/get_user.dart';
 import 'package:depi_project/core/services/get_it_service.dart';
@@ -75,13 +77,11 @@ class ProfileView extends StatelessWidget {
 
                   result.fold(
                     (failure) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            getErrorMessage(context, failure.message),
-                          ),
-                          backgroundColor: Colors.red,
-                        ),
+                      buildSnackBar(
+                        context: context,
+                        title: S.of(context).error,
+                        message: getErrorMessage(context, failure.message),
+                        contentType: ContentType.failure,
                       );
                     },
                     (_) {

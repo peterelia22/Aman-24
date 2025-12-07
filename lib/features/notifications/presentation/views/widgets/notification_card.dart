@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/helpers/format_date_time.dart';
 import '../../../../../core/helpers/report_status_helper.dart';
+import '../../../../../core/helpers/theme_helper.dart';
 import '../../../../../core/widgets/status_chip.dart';
 import '../../../domain/entities/report_notification_entity.dart';
 
@@ -35,9 +36,7 @@ class NotificationCard extends StatelessWidget {
         child: Container(
           margin: EdgeInsets.only(bottom: 8.h),
           decoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color.fromARGB(255, 38, 41, 43)
-                : Colors.white,
+            color: ThemeHelper.getSurfaceColor(context),
             borderRadius: BorderRadius.circular(16.r),
             border: Border.all(
               color: notification.isRead
@@ -48,10 +47,10 @@ class NotificationCard extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 color:
-                    (Theme.of(context).brightness == Brightness.dark
-                            ? Colors.black
-                            : Colors.grey)
-                        .withOpacity(0.1),
+                    (ThemeHelper.isDarkMode(context)
+                            ? Colors.white
+                            : Colors.black)
+                        .withOpacity(0.05),
                 blurRadius: 8,
                 offset: Offset(0, 2),
               ),

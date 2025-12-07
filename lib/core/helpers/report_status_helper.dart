@@ -10,7 +10,7 @@ Color getStatusColor(ReportStatusEnum status) {
     case ReportStatusEnum.inReview:
       return Colors.amber.shade700;
     case ReportStatusEnum.investigating:
-      return Colors.orange.shade700;
+      return Colors.blue;
     case ReportStatusEnum.resolved:
       return Colors.green.shade600;
     case ReportStatusEnum.rejected:

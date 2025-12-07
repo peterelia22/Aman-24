@@ -1,4 +1,6 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:depi_project/core/cubits/get_notifications_cubit/get_notifications_cubit.dart';
+import 'package:depi_project/core/helpers/build_snack_bar.dart';
 import 'package:depi_project/core/helpers/error_message_helper.dart';
 import 'package:depi_project/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +25,11 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
   Widget build(BuildContext context) {
     return BlocBuilder<GetNotificationsCubit, GetNotificationsState>(
       builder: (context, state) {
-        if (state is GetNotificationsLoading ||
-            state is GetNotificationsInitial) {
+        if (state is GetNotificationsInitial) {
+          return const SizedBox.shrink();
+        }
+
+        if (state is GetNotificationsLoading) {
           return const Center(child: CircularProgressIndicator());
         }
 
@@ -112,13 +117,25 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
   ) async {
     if (_isProcessing) return;
 
-    setState(() {
-      _isProcessing = true;
-    });
-
     try {
       final cubit = context.read<GetNotificationsCubit>();
-      final result = await cubit.handleNotificationTap(notification);
+
+      // If notification is unread (first time), just mark it as read
+      if (!notification.isRead) {
+        await cubit.markAsRead(notification);
+        return; // Don't open the report
+      }
+
+      // If notification is already read, show loading and open the report
+      if (!mounted) return;
+
+      setState(() {
+        _isProcessing = true;
+      });
+
+      final reportResult = await cubit.notificationsRepo.getReportById(
+        notification.reportId,
+      );
 
       if (!mounted) return;
 
@@ -128,44 +145,36 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
 
       if (!context.mounted) return;
 
-      switch (result.action) {
-        case NotificationTapAction.markedAsRead:
-          break;
-
-        case NotificationTapAction.openReport:
-          if (result.report != null) {
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => ReportDetailsScreen(report: result.report!),
-              ),
-            );
-          }
-          break;
-
-        case NotificationTapAction.error:
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                result.errorMessage != null
-                    ? getErrorMessage(context, result.errorMessage!)
-                    : S.of(context).unexpectedError,
-              ),
-              backgroundColor: Colors.red,
+      reportResult.fold(
+        (failure) {
+          buildSnackBar(
+            context: context,
+            title: S.of(context).error,
+            message: getErrorMessage(context, failure.message),
+            contentType: ContentType.failure,
+          );
+        },
+        (report) async {
+          await Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => ReportDetailsScreen(report: report),
             ),
           );
-          break;
-      }
+        },
+      );
     } catch (e) {
       if (!mounted) return;
-      setState(() {
-        _isProcessing = false;
-      });
+      if (_isProcessing) {
+        setState(() {
+          _isProcessing = false;
+        });
+      }
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(S.of(context).unexpectedError),
-          backgroundColor: Colors.red,
-        ),
+      buildSnackBar(
+        context: context,
+        title: S.of(context).error,
+        message: S.of(context).unexpectedError,
+        contentType: ContentType.failure,
       );
     }
   }
