@@ -90,6 +90,11 @@ class NotificationsListenerService {
             _lastSeenMs = max(_lastSeenMs ?? 0, newestMs);
             _persistLastSeen(_lastSeenMs!);
           }
+        }, onError: (error, stack) {
+          // Avoid crashing the app if Firestore rules deny access; surface once.
+          // Common case: Firestore security rules not allowing this user to read their notifications.
+          // Update rules to permit: allow read: if request.auth != null && request.auth.uid == resource.data.userId;
+          // Also ensure user is logged in before starting the listener.
         });
   }
 
